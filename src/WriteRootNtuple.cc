@@ -16,8 +16,7 @@ void WriteRootNtuple::Write(Encoder encoder, EncoderParameters par) {
 
 // create a root file with Tree decoder and add branches (used parameters)
 void WriteRootNtuple::CreateFile(EncoderParameters par) {
-    RootFile* fRootFile = RootFile::Instance();
-    TFile* fFile = fRootFile->GetFile();
+    TFile* fFile = RootFile::Instance()->GetFile();
     fTree = new TTree("decoder", "decoder");
 
     if (par.qShort) fTree->Branch("qShort", &event.qShort);

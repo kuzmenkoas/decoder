@@ -4,10 +4,12 @@
 #include "Writer.hh"
 #include "WriteRootNtuple.hh"
 #include "WriteTxtNtuple.hh"
+#include "WriteRootWaveform.hh"
 
 enum WriterType {
     RootNtuple,
-    TxtNtuple
+    TxtNtuple,
+    RootWaveform
 };
 
 // a factory pattern + singleton pattern

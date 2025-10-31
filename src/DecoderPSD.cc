@@ -1,19 +1,26 @@
-#include "Decoder.hh"
+#include "DecoderPSD.hh"
 #include <fstream>
 
-Decoder::Decoder(TString file, EncoderParameters par) : fFileName(file), fPar(par) {
+DecoderPSD::DecoderPSD(TString file) : fFileName(file), fPar(ConfigInputParser::Instance()->GetEncoderParameters()) {
     fPlotter = new Plotter(fPar);
     outWriters = ConfigInputParser::Instance()->GetOutputConfig()->GetOutput();
     if (outWriters.RootNtuple) fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::RootNtuple));
     if (outWriters.TxtNtuple) fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::TxtNtuple));
 }
 
-Decoder::~Decoder() {
+DecoderPSD::~DecoderPSD() {
+}
+
+void DecoderPSD::Touch() {
+    // decode and write as ntuple to root or txt or both
+    Decode();
+    // starts configuration of histograms if need and saves to root and png
+    Plot();
 }
 
 // estimates parameters to encode
 // need to understand how much unused bytes in raw
-Int_t Decoder::GetParametersNumber() {
+Int_t DecoderPSD::GetParametersNumber() {
     Int_t i = 0;
     if (fPar.qShort) i++;
     if (fPar.qLong) i++;
@@ -27,10 +34,9 @@ Int_t Decoder::GetParametersNumber() {
     return i;
 }
 
-void Decoder::Decode() {
+void DecoderPSD::Decode() {
     std::ifstream file(fFileName, std::ios::binary | std::ios::ate);
     file.seekg(0, std::ios::beg);
-    // fWriter->CreateFile(fPar);
     for (std::vector<Writer*>::iterator it = fWriterVector.begin(); it != fWriterVector.end(); it++) {
         (*it)->CreateFile(fPar);
     }
@@ -68,14 +74,12 @@ void Decoder::Decode() {
         if (file.eof()) break;
 
         // send to writer event
-        // fWriter->Write(event, fPar);
         for (std::vector<Writer*>::iterator it = fWriterVector.begin(); it != fWriterVector.end(); it++) {
             (*it)->Write(event, fPar);
         }
         fPlotter->Write(event);
     }
     file.close();
-    // fWriter->CloseFile();
     for (std::vector<Writer*>::iterator it = fWriterVector.begin(); it != fWriterVector.end(); it++) {
         (*it)->CloseFile();
     }

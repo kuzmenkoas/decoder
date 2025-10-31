@@ -1,22 +1,17 @@
-#include <iostream>
-#include "Decoder.hh"
 #include "TString.h"
 #include "TMath.h"
-#include "ConfigInputParser.hh"
 #include "RootFile.hh"
+#include "DecoderBuilder.hh"
 
 int main(int argc, char* argv[]) {
     // if input parameters less 2 (executable file and file to decode) close program
-    if (argc != 2) return 1;
+    // TODO
+    // if (argc != 2 || argc != 3) return 1;
 
-    Decoder* aDecoder = new Decoder(argv[1], // file name of file to decode
-        ConfigInputParser::Instance()->GetEncoderParameters()); // says what is in file to decode (which parameters)
-
-    // decode and write as ntuple to root or txt or both
-    aDecoder->Decode();
-    // starts configuration of histograms if need and saves to root and png
-    aDecoder->Plot();
-
+    // Decoder* aDecoder = DecoderFactory::Instance()->BuildDecoder(argv[1], DecoderType::Waveform);
+    // aDecoder->Touch();
+    DecoderBuilder* aDecoder = new DecoderBuilder(argc, argv);
+    
     // TODO (not good realization)
     RootFile::Instance()->CloseFile();
     

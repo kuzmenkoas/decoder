@@ -12,10 +12,10 @@ int main(int argc, char* argv[]) {
     Decoder* aDecoder = new Decoder(argv[1], // file name of file to decode
         ConfigInputParser::Instance()->GetEncoderParameters()); // says what is in file to decode (which parameters)
 
-    // check how to save result and start decode
-    Output out = ConfigInputParser::Instance()->GetOutputConfig()->GetOutput();
-    aDecoder->Decode(); // decode and write as ntuple to root or txt or both
-    aDecoder->Plot(); // starts configuration of histograms if need and saves to root and png
+    // decode and write as ntuple to root or txt or both
+    aDecoder->Decode();
+    // starts configuration of histograms if need and saves to root and png
+    aDecoder->Plot();
 
     // TODO (not good realization)
     RootFile::Instance()->CloseFile();

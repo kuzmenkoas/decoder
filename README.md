@@ -1,4 +1,12 @@
-# Compile program
+# Description
+
+
+# Requirements
+* ROOT
+* CMake && Make
+
+# Install program
+## Linux
 ```bash
 mkdir build
 cd build
@@ -6,9 +14,19 @@ cmake ..
 make
 ```
 
+## Windows
+1. Install Visual Studio (https://visualstudio.microsoft.com/downloads/).
+2. Install CMake (https://cmake.org/download/).
+3. Compile project with cmake (use visual studio compiler) to build.
+4. An executable file will be in build/Debug/decoder.exe .
+5. Add path to executable file to environment variable PATH: 
+* Win+R, call sysdm.cpl;
+* Advanced->Environment variables->PATH->Edit->Add a path to decoder.exe .
+
+
 # Usage
 ```bash
-./decoder {path to file}
+./decoder ${path to file}
 ```
 # Example
 If data file in directory decoder/data use:

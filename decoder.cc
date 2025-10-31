@@ -2,9 +2,6 @@
 #include "Decoder.hh"
 #include "TString.h"
 #include "TMath.h"
-#include "WriterFactory.hh"
-#include "EncoderParameters.hh"
-#include "ConfigParser.hh"
 #include "ConfigInputParser.hh"
 #include "RootFile.hh"
 
@@ -12,27 +9,15 @@ int main(int argc, char* argv[]) {
     // if input parameters less 2 (executable file and file to decode) close program
     if (argc != 2) return 1;
 
-    // Get parameters that should be encode
-    ConfigInputParser* cfg = ConfigInputParser::Instance();
-    EncoderParameters par = cfg->GetEncoderParameters();
-
-    // send which file to encode
-    TString file = argv[1];
-    Decoder* aDecoder = new Decoder(file, par);
+    Decoder* aDecoder = new Decoder(argv[1], // file name of file to decode
+        ConfigInputParser::Instance()->GetEncoderParameters()); // says what is in file to decode (which parameters)
 
     // check how to save result and start decode
-    Output out = cfg->GetOutputConfig()->GetOutput();
-    if (out.RootNtuple) {
-        Writer* aWriter = WriterFactory::Instance()->BuildWriter(WriterType::RootNtuple);
-        aDecoder->SetWriter(aWriter);
-        aDecoder->Decode();
-    }
-    if (out.TxtNtuple) {
-        Writer* aWriter = WriterFactory::Instance()->BuildWriter(WriterType::TxtNtuple);
-        aDecoder->SetWriter(aWriter);
-        aDecoder->Decode();
-    }
-    aDecoder->Plot();
+    Output out = ConfigInputParser::Instance()->GetOutputConfig()->GetOutput();
+    aDecoder->Decode(); // decode and write as ntuple to root or txt or both
+    aDecoder->Plot(); // starts configuration of histograms if need and saves to root and png
+
+    // TODO (not good realization)
     RootFile::Instance()->CloseFile();
     
     return 0;

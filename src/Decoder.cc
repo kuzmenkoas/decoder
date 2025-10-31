@@ -3,6 +3,9 @@
 
 Decoder::Decoder(TString file, EncoderParameters par) : fFileName(file), fPar(par) {
     fPlotter = new Plotter(fPar);
+    outWriters = ConfigInputParser::Instance()->GetOutputConfig()->GetOutput();
+    if (outWriters.RootNtuple) fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::RootNtuple));
+    if (outWriters.TxtNtuple) fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::TxtNtuple));
 }
 
 Decoder::~Decoder() {
@@ -27,7 +30,10 @@ Int_t Decoder::GetParametersNumber() {
 void Decoder::Decode() {
     std::ifstream file(fFileName, std::ios::binary | std::ios::ate);
     file.seekg(0, std::ios::beg);
-    fWriter->CreateFile(fPar);
+    // fWriter->CreateFile(fPar);
+    for (std::vector<Writer*>::iterator it = fWriterVector.begin(); it != fWriterVector.end(); it++) {
+        (*it)->CreateFile(fPar);
+    }
 
     int reverseCoefficient = 1;
     if (fPar.reverse) reverseCoefficient = -1;
@@ -62,9 +68,15 @@ void Decoder::Decode() {
         if (file.eof()) break;
 
         // send to writer event
-        fWriter->Write(event, fPar);
+        // fWriter->Write(event, fPar);
+        for (std::vector<Writer*>::iterator it = fWriterVector.begin(); it != fWriterVector.end(); it++) {
+            (*it)->Write(event, fPar);
+        }
         fPlotter->Write(event);
     }
     file.close();
-    fWriter->CloseFile();
+    // fWriter->CloseFile();
+    for (std::vector<Writer*>::iterator it = fWriterVector.begin(); it != fWriterVector.end(); it++) {
+        (*it)->CloseFile();
+    }
 }

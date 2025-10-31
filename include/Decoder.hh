@@ -6,6 +6,7 @@
 #include "EncoderParameters.hh"
 #include "Writer.hh"
 #include "Plotter.hh"
+#include "ConfigInputParser.hh"
 
 // Class to decode from binary
 class Decoder {
@@ -13,7 +14,6 @@ public:
     Decoder(TString file, EncoderParameters par);
     ~Decoder();
 
-    void SetWriter(Writer* writer) {fWriter = writer;};
     // decode parameters from par
     void Decode();
     void Plot() {fPlotter->Plot();};
@@ -21,8 +21,9 @@ private:
     Int_t GetParametersNumber();
     TString fFileName;
     EncoderParameters fPar;
-    Writer* fWriter = nullptr;
     Plotter* fPlotter = nullptr;
+    Output outWriters;
+    std::vector<Writer*> fWriterVector;
 };
 
 #endif

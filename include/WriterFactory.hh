@@ -5,11 +5,13 @@
 #include "WriteRootNtuple.hh"
 #include "WriteTxtNtuple.hh"
 #include "WriteRootWaveform.hh"
+#include "WriterTxtWaveform.hh"
 
 enum WriterType {
     RootNtuple,
     TxtNtuple,
-    RootWaveform
+    RootWaveform,
+    TxtWaveform
 };
 
 // a factory pattern + singleton pattern

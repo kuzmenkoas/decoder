@@ -29,6 +29,9 @@ Writer* WriterFactory::BuildWriter(WriterType aType) {
     case WriterType::RootWaveform:
         aWriter = new WriteRootWaveform();
         break;
+    case WriterType::TxtWaveform:
+        aWriter = new WriteTxtWaveform();
+        break;
     }
     return aWriter;
 }

@@ -15,6 +15,7 @@ void DecoderWaveform::Decode() {
     file.seekg(0, std::ios::beg);
 
     Writer* aWriter = WriterFactory::Instance()->BuildWriter(WriterType::RootWaveform);
+    PlotterWaveform* aPlt = new PlotterWaveform();
     aWriter->CreateFile();
 
     int i = 0;
@@ -24,8 +25,10 @@ void DecoderWaveform::Decode() {
         aWave.i = i++;
         if (file.eof()) break;
         aWriter->Write(aWave);
+        aPlt->Write(aWave);
         // csv gonna be too long and unreadable
     }
     file.close();
     aWriter->CloseFile();
+    aPlt->Plot();
 }

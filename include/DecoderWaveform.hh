@@ -5,6 +5,7 @@
 #include "TString.h"
 #include <fstream>
 #include "WriterFactory.hh"
+#include "PlotterWaveform.hh"
 // #include "Waveform.hh"
 
 class DecoderWaveform : public Decoder {

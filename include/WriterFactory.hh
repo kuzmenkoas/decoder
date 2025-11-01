@@ -5,7 +5,7 @@
 #include "WriteRootNtuple.hh"
 #include "WriteTxtNtuple.hh"
 #include "WriteRootWaveform.hh"
-#include "WriterTxtWaveform.hh"
+#include "WriteTxtWaveform.hh"
 
 enum WriterType {
     RootNtuple,

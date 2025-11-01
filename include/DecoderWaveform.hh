@@ -6,7 +6,8 @@
 #include <fstream>
 #include "WriterFactory.hh"
 #include "PlotterWaveform.hh"
-// #include "Waveform.hh"
+#include "ConfigInputParser.hh"
+#include <vector>
 
 class DecoderWaveform : public Decoder {
 public:
@@ -17,6 +18,7 @@ public:
     void Decode();
 private:
     TString fFileName;
+    std::vector<Writer*> fWriterVector;
 };
 
 #endif

@@ -30,7 +30,12 @@ void ConfigInputParser::StartParser() {
         if ((encoder.qShort || encoder.qLong) && encoder.baseline) Reverse();
     }
 
-    if (fFileType == DecoderType::WaveformType || fFileType == DecoderType::BothType) WaveformNumber();
+    if (fFileType == DecoderType::WaveformType || fFileType == DecoderType::BothType) {
+        BaselineNumber();
+        ShortNumber();
+        LongNumber();
+        WaveformNumber();
+    }
 }
 
 ConfigInputParser::~ConfigInputParser() {
@@ -113,4 +118,9 @@ void ConfigInputParser::ShortNumber() {
 void ConfigInputParser::LongNumber() {
     std::cout << "The number of qLong points?" << std::endl;
     std::cin >> fLongPoints;
+}
+
+void ConfigInputParser::BaselineNumber() {
+    std::cout << "The number of baseline points?" << std::endl;
+    std::cin >> fBaselinePoints;
 }

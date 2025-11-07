@@ -13,6 +13,7 @@ public:
     // write an event to file
     virtual void Write(Encoder encoder, EncoderParameters par) {};
     virtual void Write(Waveform aWave) {};
+    virtual void Write(WaveformSig aWave) {};
     // create output file (txt, root etc)
     virtual void CreateFile(EncoderParameters par) {};
     virtual void CreateFile() {};

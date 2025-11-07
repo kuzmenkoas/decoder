@@ -142,7 +142,6 @@ void Plotter::Plot() {
     for (int i = 0; i < pltPar.size(); i++) {
         PlotParameters tmp = pltPar[i];
         TCanvas* c = new TCanvas(tmp.name, "Canvas", 800, 600);
-        std::cout << tmp.Nbins << std::endl;
         hist[i]->Draw();
         hist[i]->Write(tmp.name);
         c->SaveAs(tmp.name+".png");

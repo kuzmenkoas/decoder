@@ -4,7 +4,8 @@
 #include <stdio.h>
 
 struct Waveform {
-    int i;
+    int id;
+    int t;
     int16_t wave;
 };
 

@@ -1,9 +1,9 @@
 # Description
-
+Decoder for Digitizer version 1.1.1 output (PSD and Waveform). Reads binary file, saves results in root and txt formats.
 
 # Requirements
 * ROOT
-* CMake && Make
+* cmake && make
 
 # Install program
 ## Linux

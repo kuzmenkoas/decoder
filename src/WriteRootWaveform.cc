@@ -16,14 +16,15 @@ void WriteRootWaveform::Write(Waveform aWave) {
 void WriteRootWaveform::CreateFile() {
     RootFile* fRootFile = RootFile::Instance();
     TFile* fFile = fRootFile->GetFile();
-    fTree = new TTree("waveform", "waveform");
+    fTree = new TTree("waveformnt", "waveformnt");
 
-    fTree->Branch("i", &fWave.i);
+    fTree->Branch("id", &fWave.id);
+    fTree->Branch("t", &fWave.t);
     fTree->Branch("wave", &fWave.wave);
 }
 
 void WriteRootWaveform::CloseFile() {
     TFile* fFile = RootFile::Instance()->GetFile();
     // TODO
-    // fTree->Write();
+    fTree->Write();
 }

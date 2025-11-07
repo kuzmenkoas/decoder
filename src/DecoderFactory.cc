@@ -19,10 +19,10 @@ DecoderFactory::~DecoderFactory() {
 Decoder* DecoderFactory::BuildDecoder(TString file, DecoderType aType) {
     Decoder* aDecoder = nullptr;
     switch (aType) {
-    case DecoderType::PSD:
+    case DecoderType::PSDType:
         aDecoder = new DecoderPSD(file);
         break;
-    case DecoderType::Waveform:
+    case DecoderType::WaveformType:
         aDecoder = new DecoderWaveform(file);
         break;
     }

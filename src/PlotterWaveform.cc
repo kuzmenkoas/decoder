@@ -8,7 +8,7 @@ PlotterWaveform::~PlotterWaveform() {
 }
 
 void PlotterWaveform::Write(Waveform aWave) {
-    if (aWave.i < 2000) gr->SetPoint(aWave.i, aWave.i, aWave.wave);
+    if ((aWave.id > 4120) && (aWave.id < 4122)) gr->SetPoint(aWave.t, aWave.t, aWave.wave);
 }
 
 void PlotterWaveform::Plot() {

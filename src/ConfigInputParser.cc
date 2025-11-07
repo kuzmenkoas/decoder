@@ -13,17 +13,24 @@ ConfigInputParser* ConfigInputParser::Instance() {
 }
 
 ConfigInputParser::ConfigInputParser() {
+}
+
+void ConfigInputParser::StartParser() {
     // create a configuration struct for output format
     outputConfig = new OutputConfig();
 
     // start a console user input for output format
     SaveFormat();
     
-    // start a console user input for decode parameters
-    Parameters();
+    if ((fFileType == DecoderType::BothType) || (fFileType == DecoderType::PSDType)) {
+        // start a console user input for decode parameters
+        Parameters();
 
-    // start a console user input for reversing
-    if (encoder.qShort || encoder.qLong || encoder.baseline) Reverse();
+        // start a console user input for reversing
+        if ((encoder.qShort || encoder.qLong) && encoder.baseline) Reverse();
+    }
+
+    if (fFileType == DecoderType::WaveformType || fFileType == DecoderType::BothType) WaveformNumber();
 }
 
 ConfigInputParser::~ConfigInputParser() {
@@ -78,4 +85,32 @@ void ConfigInputParser::Reverse() {
     int val;
     std::cin >> val;
     if (val == 1) encoder.reverse = true;
+}
+
+void ConfigInputParser::DefineFileType() {
+    if (fArgc != 3) {
+        std::cout << "What file is it?" << std::endl;
+        std::cout << " (1) PSD" << std::endl;
+        std::cout << " (2) Waveform" << std::endl;
+
+        int i = 0;
+        std::cin >> i;
+        if (i == 1) fFileType = DecoderType::PSDType;
+        if (i == 2) fFileType = DecoderType::WaveformType;
+    } else fFileType = DecoderType::BothType;
+}
+
+void ConfigInputParser::WaveformNumber() {
+    std::cout << "The number of waveform points?" << std::endl;
+    std::cin >> fWavePoints;
+}
+
+void ConfigInputParser::ShortNumber() {
+    std::cout << "The number of qShort points?" << std::endl;
+    std::cin >> fShortPoints;
+}
+
+void ConfigInputParser::LongNumber() {
+    std::cout << "The number of qLong points?" << std::endl;
+    std::cin >> fLongPoints;
 }

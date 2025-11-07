@@ -4,11 +4,7 @@
 #include "Decoder.hh"
 #include "DecoderPSD.hh"
 #include "DecoderWaveform.hh"
-
-enum DecoderType {
-    PSD,
-    Waveform
-};
+#include "DecoderType.hh"
 
 class DecoderFactory {
 public:

@@ -5,6 +5,11 @@ Plotter::Plotter(EncoderParameters par) : fPar(par) {
     CreateHistograms();
 }
 
+Plotter::Plotter(TString id) : fId(id) {
+    ConfigPlotter(id);
+    CreateHistograms();
+}
+
 Plotter::~Plotter() {
 }
 
@@ -41,6 +46,26 @@ void Plotter::ConfigPlotter() {
         // if (fPar.psdValue) if (tmp == std::to_string(f++)) {fParPlot.psdValue = true; ConfigParameter("psdValue");}
         if ((fPar.qShort) && (fPar.baseline)) if (tmp == std::to_string(f++)) {fParPlot.qShortBaseline = true; ConfigParameter("qShBase");}
         if ((fPar.qLong) && (fPar.baseline)) if (tmp == std::to_string(f++)) {fParPlot.qLongBaseline = true; ConfigParameter("qLgBase");}
+    }
+}
+
+void Plotter::ConfigPlotter(TString id) {
+    std::cout << "Choose parameter to plot (multiply input, example: 123 for 3 parameters to plot) for " << id << std::endl;
+    int i = 0;
+    std::cout << " (" << i++ << ") exit" << std::endl;
+    std::cout << " (" << i++ << ") qShort" << std::endl;
+    std::cout << " (" << i++ << ") qLong" << std::endl;
+    std::cout << " (" << i++ << ") baseline" << std::endl;
+    
+    std::string val;
+    std::cin >> val;
+    for (int k = 0; k < val.length(); k++) {
+        std::string tmp(1, val[k]);
+        int f = 0;
+        if (tmp == std::to_string(f++)) break;
+        if (tmp == std::to_string(f++)) {fParPlot.qShort = true; ConfigParameter("qShort");}
+        if (tmp == std::to_string(f++)) {fParPlot.qLong = true; ConfigParameter("qLong");}
+        if (tmp == std::to_string(f++)) {fParPlot.baseline = true; ConfigParameter("baseline");}
     }
 }
 
@@ -90,60 +115,67 @@ void Plotter::Write(Encoder event) {
     if (fParPlot.qLongBaseline) hist[i++]->Fill(event.qLongBaseline);
 }
 
+void Plotter::Write(WaveformSig aWave) {
+    int i = 0;
+    if (fParPlot.qShort) hist[i++]->Fill(aWave.qShort);
+    if (fParPlot.qLong) hist[i++]->Fill(aWave.qLong);
+    if (fParPlot.baseline) hist[i++]->Fill(aWave.baseline);
+}
+
 void Plotter::CreateHistograms() {
     int i = 0;
     if (fParPlot.qShort) {
         PlotParameters tmp = pltPar[i++];
-        hist.push_back(new TH1D(tmp.name, tmp.name, tmp.Nbins, tmp.minVal, tmp.maxVal));
+        hist.push_back(new TH1D(tmp.name+fId, tmp.name+fId, tmp.Nbins, tmp.minVal, tmp.maxVal));
     }
     if (fParPlot.qLong) {
         PlotParameters tmp = pltPar[i++];
-        hist.push_back(new TH1D(tmp.name, tmp.name, tmp.Nbins, tmp.minVal, tmp.maxVal));
+        hist.push_back(new TH1D(tmp.name+fId, tmp.name+fId, tmp.Nbins, tmp.minVal, tmp.maxVal));
     }
     if (fParPlot.cfd_y1) {
         PlotParameters tmp = pltPar[i++];
-        hist.push_back(new TH1D(tmp.name, tmp.name, tmp.Nbins, tmp.minVal, tmp.maxVal));
+        hist.push_back(new TH1D(tmp.name+fId, tmp.name+fId, tmp.Nbins, tmp.minVal, tmp.maxVal));
     }
     if (fParPlot.cfd_y2) {
         PlotParameters tmp = pltPar[i++];
-        hist.push_back(new TH1D(tmp.name, tmp.name, tmp.Nbins, tmp.minVal, tmp.maxVal));
+        hist.push_back(new TH1D(tmp.name+fId, tmp.name+fId, tmp.Nbins, tmp.minVal, tmp.maxVal));
     }
     if (fParPlot.baseline) {
         PlotParameters tmp = pltPar[i++];
-        hist.push_back(new TH1D(tmp.name, tmp.name, tmp.Nbins, tmp.minVal, tmp.maxVal));
+        hist.push_back(new TH1D(tmp.name+fId, tmp.name+fId, tmp.Nbins, tmp.minVal, tmp.maxVal));
     }
     if (fParPlot.height) {
         PlotParameters tmp = pltPar[i++];
-        hist.push_back(new TH1D(tmp.name, tmp.name, tmp.Nbins, tmp.minVal, tmp.maxVal));
+        hist.push_back(new TH1D(tmp.name+fId, tmp.name+fId, tmp.Nbins, tmp.minVal, tmp.maxVal));
     }
     if (fParPlot.eventCounter) {
         PlotParameters tmp = pltPar[i++];
-        hist.push_back(new TH1D(tmp.name, tmp.name, tmp.Nbins, tmp.minVal, tmp.maxVal));
+        hist.push_back(new TH1D(tmp.name+fId, tmp.name+fId, tmp.Nbins, tmp.minVal, tmp.maxVal));
     }
     // if (fParPlot.eventCounterPSD) {
     //     PlotParameters tmp = pltPar[i++];
-    //     hist.push_back(new TH1D(tmp.name, tmp.name, tmp.Nbins, tmp.minVal, tmp.maxVal));
+    //     hist.push_back(new TH1D(tmp.name+fId, tmp.name+fId, tmp.Nbins, tmp.minVal, tmp.maxVal));
     // }
     // if (fParPlot.psdValue) {
     //     PlotParameters tmp = pltPar[i++];
-    //     hist.push_back(new TH1D(tmp.name, tmp.name, tmp.Nbins, tmp.minVal, tmp.maxVal));
+    //     hist.push_back(new TH1D(tmp.name+fId, tmp.name+fId, tmp.Nbins, tmp.minVal, tmp.maxVal));
     // }
     if (fParPlot.qShortBaseline) {
         PlotParameters tmp = pltPar[i++];
-        hist.push_back(new TH1D(tmp.name, tmp.name, tmp.Nbins, tmp.minVal, tmp.maxVal));
+        hist.push_back(new TH1D(tmp.name+fId, tmp.name+fId, tmp.Nbins, tmp.minVal, tmp.maxVal));
     }
     if (fParPlot.qLongBaseline) {
         PlotParameters tmp = pltPar[i++];
-        hist.push_back(new TH1D(tmp.name, tmp.name, tmp.Nbins, tmp.minVal, tmp.maxVal));
+        hist.push_back(new TH1D(tmp.name+fId, tmp.name+fId, tmp.Nbins, tmp.minVal, tmp.maxVal));
     }
 }
 
 void Plotter::Plot() {
     for (int i = 0; i < pltPar.size(); i++) {
         PlotParameters tmp = pltPar[i];
-        TCanvas* c = new TCanvas(tmp.name, "Canvas", 800, 600);
+        TCanvas* c = new TCanvas(tmp.name+fId, "Canvas", 800, 600);
         hist[i]->Draw();
-        hist[i]->Write(tmp.name);
-        c->SaveAs(tmp.name+".png");
+        hist[i]->Write(tmp.name+fId);
+        c->SaveAs(tmp.name+fId+".png");
     }
 }

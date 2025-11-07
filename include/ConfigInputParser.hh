@@ -15,6 +15,7 @@ public:
     DecoderType GetFileType() {return fFileType;};
     void StartParser();
     int GetWaveformNumber() {return fWavePoints;};
+    int GetBaselineNumber() {return fBaselinePoints;};
     int GetShortNumber() {return fShortPoints;};
     int GetLongNumber() {return fLongPoints;};
 private:
@@ -30,6 +31,7 @@ private:
     void DefineFileType();
 
     void WaveformNumber();
+    void BaselineNumber();
     void ShortNumber();
     void LongNumber();
 
@@ -40,6 +42,7 @@ private:
     EncoderParameters encoder;
     int fArgc;
     int fWavePoints;
+    int fBaselinePoints;
     int fShortPoints;
     int fLongPoints;
 };

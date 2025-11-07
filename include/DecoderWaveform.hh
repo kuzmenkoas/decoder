@@ -8,6 +8,7 @@
 #include "PlotterWaveform.hh"
 #include "ConfigInputParser.hh"
 #include <vector>
+#include "Plotter.hh"
 
 class DecoderWaveform : public Decoder {
 public:
@@ -16,9 +17,11 @@ public:
 
     void Touch();
     void Decode();
+    void Plot() {fPlotter->Plot();};
 private:
     TString fFileName;
     std::vector<Writer*> fWriterVector;
+    Plotter* fPlotter = nullptr;
 };
 
 #endif

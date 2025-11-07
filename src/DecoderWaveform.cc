@@ -3,6 +3,7 @@
 DecoderWaveform::DecoderWaveform(TString file) : fFileName(file) {
     Output outWriters = ConfigInputParser::Instance()->GetOutputConfig()->GetOutput();
     if (outWriters.RootNtuple) {
+        fPlotter = new Plotter("Sig");
         fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::RootWaveform));
         fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::RootWaveformSig));        
     }
@@ -14,6 +15,10 @@ DecoderWaveform::~DecoderWaveform() {
 
 void DecoderWaveform::Touch() {
     Decode();
+    Output outWriters = ConfigInputParser::Instance()->GetOutputConfig()->GetOutput();
+    if (outWriters.RootNtuple) {
+        Plot();
+    }
 }
 
 void DecoderWaveform::Decode() {
@@ -77,6 +82,7 @@ void DecoderWaveform::Decode() {
                         aWaveSig.qLong = qLong;
                         
                         fWriterVector[1]->Write(aWaveSig);
+                        fPlotter->Write(aWaveSig);
                         baseline = 0;
                         iBase = 0;
                         qShort = 0;

@@ -6,6 +6,7 @@
 #include <TH1I.h>
 #include <TCanvas.h>
 #include "RootFile.hh"
+#include "Waveform.hh"
 
 struct PlotParameters {
     Int_t Nbins;
@@ -17,11 +18,14 @@ struct PlotParameters {
 class Plotter {
 public:
     Plotter(EncoderParameters par);
+    Plotter(TString id);
     ~Plotter();
     void Write(Encoder event);
+    void Write(WaveformSig aWave);
     void Plot();
 private:
     void ConfigPlotter();
+    void ConfigPlotter(TString id);
     void ConfigParameter(TString par);
     void HeadParameter(TString par);
     void CreateHistograms();
@@ -29,6 +33,8 @@ private:
     EncoderParameters fPar;
     std::vector<TH1*> hist;
     std::vector<PlotParameters> pltPar;
+
+    TString fId = "";
 };
 
 #endif

@@ -28,8 +28,8 @@ void WriteRootNtuple::CreateFile(EncoderParameters par) {
     if (par.eventCounter) fTree->Branch("eventCounter", &event.eventCounter);
     if (par.eventCounterPSD) fTree->Branch("eventCounterPSD", &event.eventCounterPSD);
     if (par.psdValue) fTree->Branch("psdValue", &event.psdValue);
-    if (par.qShort && par.baseline) fTree->Branch("qShortBaseline", &event.qShortBaseline);
-    if (par.qLong && par.baseline) fTree->Branch("qLongBaseline", &event.qLongBaseline);
+    // if (par.qShort && par.baseline) fTree->Branch("qShortBaseline", &event.qShortBaseline);
+    // if (par.qLong && par.baseline) fTree->Branch("qLongBaseline", &event.qLongBaseline);
 }
 
 // close file

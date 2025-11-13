@@ -27,7 +27,6 @@ private:
     void ConfigPlotter();
     void ConfigPlotter(TString id);
     void ConfigParameter(TString par);
-    void HeadParameter(TString par);
     void CreateHistograms();
     EncoderParameters fParPlot;
     EncoderParameters fPar;

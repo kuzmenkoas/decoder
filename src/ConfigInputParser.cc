@@ -35,10 +35,9 @@ void ConfigInputParser::StartParser() {
     if ((fFileType == DecoderType::BothType) || (fFileType == DecoderType::PSDType)) {
         // start a console user input for decode parameters
         Parameters();
-
-        // start a console user input for reversing
-        if ((encoder.qShort || encoder.qLong) && encoder.baseline) Reverse();
     }
+    // start a console user input for reversing
+    if (((encoder.qShort || encoder.qLong || encoder.baseline) && fFileType == DecoderType::PSDType) || fFileType == DecoderType::WaveformType) Reverse();
 
     if (fFileType == DecoderType::WaveformType || fFileType == DecoderType::BothType) {
         BaselineNumber();
@@ -53,7 +52,7 @@ ConfigInputParser::~ConfigInputParser() {
 
 // no protection from user input
 void ConfigInputParser::SaveFormat() {
-    std::cout << "Choose format to save" << std::endl;
+    std::cout << "\n\n\nChoose format to save" << std::endl;
     std::cout << " (1) Root" << std::endl;
     std::cout << " (2) Txt" << std::endl;
     std::cout << " (3) Root and Txt" << std::endl;
@@ -66,7 +65,10 @@ void ConfigInputParser::SaveFormat() {
 
 // no protection from user input
 void ConfigInputParser::Parameters() {
-    std::cout << "Choose saved parameters to decode (for multiple write as 123 - for qShort, qLong and cfd_y1):" << std::endl;
+    std::cout << "\n\n\nWhat is encode in binary PSD file.\n";
+    std::cout << "Choose everything that is stored in bin file\n";
+    std::cout<< "(decoder will not be able to work correctly if this parameters will be incorrect)!\n";
+    std::cout << "For multiple write as 123 - for qShort, qLong and cfd_y1.\n If in binary file stored all parameters choose 0 (ALL):\n";
     std::cout << " (1) qShort" << std::endl;
     std::cout << " (2) qLong" << std::endl;
     std::cout << " (3) cfd_y1" << std::endl;
@@ -94,7 +96,7 @@ void ConfigInputParser::Parameters() {
 }
 
 void ConfigInputParser::Reverse() {
-    std::cout << "Reverse integral?" << std::endl;
+    std::cout << "\n\n\nReverse integral?" << std::endl;
     std::cout << " (1) Yes" << std::endl;
     std::cout << " (2) Not" << std::endl;
     int val;
@@ -104,7 +106,7 @@ void ConfigInputParser::Reverse() {
 
 void ConfigInputParser::DefineFileType() {
     if (fArgc != 3) {
-        std::cout << "What file is it?" << std::endl;
+        std::cout << "\n\n\nWhat file is it?" << std::endl;
         std::cout << " (1) PSD" << std::endl;
         std::cout << " (2) Waveform" << std::endl;
 
@@ -135,22 +137,22 @@ void ConfigInputParser::WaveformNumber() {
         fEvents = filePSD.tellg()/bytes;
         fWavePoints = fileWave.tellg()/(fEvents*2);
     } else {
-        std::cout << "The number of waveform points?" << std::endl;
+        std::cout << "\n\n\nThe number of waveform points?" << std::endl;
         std::cin >> fWavePoints;
     }
 }
 
 void ConfigInputParser::ShortNumber() {
-    std::cout << "The number of qShort points?" << std::endl;
+    std::cout << "\n\n\nThe number of qShort points?" << std::endl;
     std::cin >> fShortPoints;
 }
 
 void ConfigInputParser::LongNumber() {
-    std::cout << "The number of qLong points?" << std::endl;
+    std::cout << "\n\n\nThe number of qLong points?" << std::endl;
     std::cin >> fLongPoints;
 }
 
 void ConfigInputParser::BaselineNumber() {
-    std::cout << "The number of baseline points?" << std::endl;
+    std::cout << "\n\n\nThe number of baseline points?" << std::endl;
     std::cin >> fBaselinePoints;
 }

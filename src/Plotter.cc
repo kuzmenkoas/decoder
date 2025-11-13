@@ -14,7 +14,7 @@ Plotter::~Plotter() {
 }
 
 void Plotter::ConfigPlotter() {
-    std::cout << "Choose parameter to plot (multiply input, example: 123 for 3 parameters to plot)" << std::endl;
+    std::cout << "\n\n\nChoose parameter to plot (multiply input, example: 123 for 3 parameters to plot)" << std::endl;
     int i = 0;
     std::cout << " (" << i++ << ") exit" << std::endl;
     if (fPar.qShort) std::cout << " (" << i++ << ") qShort" << std::endl;
@@ -26,8 +26,8 @@ void Plotter::ConfigPlotter() {
     if (fPar.eventCounter) std::cout << " (" << i++ << ") eventCounter" << std::endl;
     // if (fPar.eventCounterPSD) std::cout << " (" << i++ << ") eventCounterPSD" << std::endl;
     // if (fPar.psdValue) std::cout << " (" << ++i << ") psdValue" << std::endl;
-    if ((fPar.qShort) && (fPar.baseline)) std::cout << " (" << i++ << ") qShortBaseline" << std::endl;
-    if ((fPar.qLong) && (fPar.baseline)) std::cout << " (" << i++ << ") qLongBaseline" << std::endl;
+    // if ((fPar.qShort) && (fPar.baseline)) std::cout << " (" << i++ << ") qShortBaseline" << std::endl;
+    // if ((fPar.qLong) && (fPar.baseline)) std::cout << " (" << i++ << ") qLongBaseline" << std::endl;
     
     std::string val;
     std::cin >> val;
@@ -44,13 +44,13 @@ void Plotter::ConfigPlotter() {
         if (fPar.eventCounter) if (tmp == std::to_string(f++)) {fParPlot.eventCounter = true; ConfigParameter("eventCounter");}
         // if (fPar.eventCounterPSD) if (tmp == std::to_string(f++)) {fParPlot.eventCounterPSD = true; ConfigParameter("eventCounterPSD");}
         // if (fPar.psdValue) if (tmp == std::to_string(f++)) {fParPlot.psdValue = true; ConfigParameter("psdValue");}
-        if ((fPar.qShort) && (fPar.baseline)) if (tmp == std::to_string(f++)) {fParPlot.qShortBaseline = true; ConfigParameter("qShBase");}
-        if ((fPar.qLong) && (fPar.baseline)) if (tmp == std::to_string(f++)) {fParPlot.qLongBaseline = true; ConfigParameter("qLgBase");}
+        // if ((fPar.qShort) && (fPar.baseline)) if (tmp == std::to_string(f++)) {fParPlot.qShortBaseline = true; ConfigParameter("qShBase");}
+        // if ((fPar.qLong) && (fPar.baseline)) if (tmp == std::to_string(f++)) {fParPlot.qLongBaseline = true; ConfigParameter("qLgBase");}
     }
 }
 
 void Plotter::ConfigPlotter(TString id) {
-    std::cout << "Choose parameter to plot (multiply input, example: 123 for 3 parameters to plot) for " << id << std::endl;
+    std::cout << "\n\n\nChoose parameter to plot (multiply input, example: 123 for 3 parameters to plot) for " << id << std::endl;
     int i = 0;
     std::cout << " (" << i++ << ") exit" << std::endl;
     std::cout << " (" << i++ << ") qShort" << std::endl;
@@ -69,30 +69,26 @@ void Plotter::ConfigPlotter(TString id) {
     }
 }
 
-void Plotter::HeadParameter(TString par) {
-    std::cout << "Configure a plot for parameter " + par << std::endl;
-}
-
 void Plotter::ConfigParameter(TString par) {
     PlotParameters tmpPar;
     //HeadParameter(par);
-    std::cout << "Configure a plot for parameter " + par << std::endl;
+    std::cout << "\n\n\nConfigure a plot for parameter " + par << std::endl;
     // name.push_back(par);
     tmpPar.name = par;
 
-    std::cout << "Enter number of bins" << std::endl;
+    std::cout << "\nEnter number of bins" << std::endl;
     int tmpNbins;
     std::cin >> tmpNbins;
     // Nbins.push_back(tmpNbins);
     tmpPar.Nbins = tmpNbins;
 
-    std::cout << "Enter min value of histogram" << std::endl;
+    std::cout << "\nEnter min value of histogram" << std::endl;
     double tmpMin;
     std::cin >> tmpMin;
     // minVal.push_back(tmpMin);
     tmpPar.minVal = tmpMin;
 
-    std::cout << "Enter max value of histogram" << std::endl;
+    std::cout << "\nEnter max value of histogram" << std::endl;
     double tmpMax;
     std::cin >> tmpMax;
     // maxVal.push_back(tmpMax);
@@ -111,8 +107,8 @@ void Plotter::Write(Encoder event) {
     if (fParPlot.eventCounter) hist[i++]->Fill(event.eventCounter);
     // if (fParPlot.eventCounterPSD) hist[i++]->Fill(event.eventCounterPSD);
     // if (fParPlot.psdValue) hist[i++]->Fill(event.psdValue);
-    if (fParPlot.qShortBaseline) hist[i++]->Fill(event.qShortBaseline);
-    if (fParPlot.qLongBaseline) hist[i++]->Fill(event.qLongBaseline);
+    // if (fParPlot.qShortBaseline) hist[i++]->Fill(event.qShortBaseline);
+    // if (fParPlot.qLongBaseline) hist[i++]->Fill(event.qLongBaseline);
 }
 
 void Plotter::Write(WaveformSig aWave) {
@@ -160,14 +156,14 @@ void Plotter::CreateHistograms() {
     //     PlotParameters tmp = pltPar[i++];
     //     hist.push_back(new TH1D(tmp.name+fId, tmp.name+fId, tmp.Nbins, tmp.minVal, tmp.maxVal));
     // }
-    if (fParPlot.qShortBaseline) {
-        PlotParameters tmp = pltPar[i++];
-        hist.push_back(new TH1D(tmp.name+fId, tmp.name+fId, tmp.Nbins, tmp.minVal, tmp.maxVal));
-    }
-    if (fParPlot.qLongBaseline) {
-        PlotParameters tmp = pltPar[i++];
-        hist.push_back(new TH1D(tmp.name+fId, tmp.name+fId, tmp.Nbins, tmp.minVal, tmp.maxVal));
-    }
+    // if (fParPlot.qShortBaseline) {
+    //     PlotParameters tmp = pltPar[i++];
+    //     hist.push_back(new TH1D(tmp.name+fId, tmp.name+fId, tmp.Nbins, tmp.minVal, tmp.maxVal));
+    // }
+    // if (fParPlot.qLongBaseline) {
+    //     PlotParameters tmp = pltPar[i++];
+    //     hist.push_back(new TH1D(tmp.name+fId, tmp.name+fId, tmp.Nbins, tmp.minVal, tmp.maxVal));
+    // }
 }
 
 void Plotter::Plot() {

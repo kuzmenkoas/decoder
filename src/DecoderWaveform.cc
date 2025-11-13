@@ -30,6 +30,10 @@ void DecoderWaveform::Decode() {
         (*it)->CreateFile();
     }
 
+    EncoderParameters fPar = ConfigInputParser::Instance()->GetEncoderParameters();
+    int reverseCoefficient = 1;
+    if (fPar.reverse) reverseCoefficient = -1;
+
     int t = 0;
     int i = 0;
     int fWavePoint = ConfigInputParser::Instance()->GetWaveformNumber();
@@ -77,9 +81,9 @@ void DecoderWaveform::Decode() {
                         qShort -= fShortPoint*baseline;
                         qLong -= fLongPoint*baseline;
                         WaveformSig aWaveSig;
-                        aWaveSig.baseline = baseline;
-                        aWaveSig.qShort = qShort;
-                        aWaveSig.qLong = qLong;
+                        aWaveSig.baseline = reverseCoefficient*baseline;
+                        aWaveSig.qShort = reverseCoefficient*qShort;
+                        aWaveSig.qLong = reverseCoefficient*qLong;
                         
                         fWriterVector[1]->Write(aWaveSig);
                         fPlotter->Write(aWaveSig);

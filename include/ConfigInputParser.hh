@@ -9,11 +9,12 @@
 class ConfigInputParser {
 public:
     static ConfigInputParser* Instance();
-    void SetArgc(int argc) {fArgc = argc; DefineFileType();};
+    void SetArgc(int argc, char* argv[]);
     OutputConfig* GetOutputConfig() {return outputConfig;};
     EncoderParameters GetEncoderParameters() {return encoder;};
     DecoderType GetFileType() {return fFileType;};
     void StartParser();
+    int GetEvents() {return fEvents;};
     int GetWaveformNumber() {return fWavePoints;};
     int GetBaselineNumber() {return fBaselinePoints;};
     int GetShortNumber() {return fShortPoints;};
@@ -41,10 +42,13 @@ private:
     DecoderType fFileType;
     EncoderParameters encoder;
     int fArgc;
+    char* fArgv;
+    int fEvents;
     int fWavePoints;
     int fBaselinePoints;
     int fShortPoints;
     int fLongPoints;
+    std::string fName[2];
 };
 
 #endif

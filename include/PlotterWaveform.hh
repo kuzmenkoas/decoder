@@ -13,7 +13,7 @@ public:
     void Write(Waveform aWave);
     void Plot();
 private:
-    TGraph* gr = nullptr;
+    std::map<int, double> fWave;
 };
 
 #endif

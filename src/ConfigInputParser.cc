@@ -1,6 +1,7 @@
 #include "ConfigInputParser.hh"
 #include <iostream>
 #include <string>
+#include <fstream>
 
 ConfigInputParser* ConfigInputParser::fCfgParser = 0;
 
@@ -13,6 +14,15 @@ ConfigInputParser* ConfigInputParser::Instance() {
 }
 
 ConfigInputParser::ConfigInputParser() {
+}
+
+void ConfigInputParser::SetArgc(int argc, char* argv[]) {
+    fArgc = argc;
+    if (argc == 3) {
+        fName[0] = argv[1];
+        fName[1] = argv[2];
+    }
+    DefineFileType();
 }
 
 void ConfigInputParser::StartParser() {
@@ -106,8 +116,28 @@ void ConfigInputParser::DefineFileType() {
 }
 
 void ConfigInputParser::WaveformNumber() {
-    std::cout << "The number of waveform points?" << std::endl;
-    std::cin >> fWavePoints;
+    if (!(fFileType == DecoderType::WaveformType)) {
+        std::ifstream filePSD(fName[0], std::ios::binary | std::ios::ate);
+        std::ifstream fileWave(fName[1], std::ios::binary | std::ios::ate);
+        int bytes = 0;
+        int i = 0;
+        Encoder size;
+        if (encoder.qShort) {bytes += sizeof(size.qShort); i++;}
+        if (encoder.qLong) {bytes += sizeof(size.qLong); i++;}
+        if (encoder.cfd_y1) {bytes += sizeof(size.cfd_y1); i++;}
+        if (encoder.cfd_y2) {bytes += sizeof(size.cfd_y2); i++;}
+        if (encoder.baseline) {bytes += sizeof(size.baseline); i++;}
+        if (encoder.height) {bytes += sizeof(size.height); i++;}
+        if (encoder.eventCounter) {bytes += sizeof(size.eventCounter); i++;}
+        if (encoder.eventCounterPSD) {bytes += sizeof(size.eventCounterPSD); i++;}
+        if (encoder.psdValue) {bytes += sizeof(size.psdValue); i++;}
+        bytes += 2+2*i;
+        fEvents = filePSD.tellg()/bytes;
+        fWavePoints = fileWave.tellg()/(fEvents*2);
+    } else {
+        std::cout << "The number of waveform points?" << std::endl;
+        std::cin >> fWavePoints;
+    }
 }
 
 void ConfigInputParser::ShortNumber() {

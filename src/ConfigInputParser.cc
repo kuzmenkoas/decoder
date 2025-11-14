@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <filesystem>
 
 ConfigInputParser* ConfigInputParser::fCfgParser = 0;
 
@@ -119,8 +120,8 @@ void ConfigInputParser::DefineFileType() {
 
 void ConfigInputParser::WaveformNumber() {
     if (!(fFileType == DecoderType::WaveformType)) {
-        std::ifstream filePSD(fName[0], std::ios::binary | std::ios::ate);
-        std::ifstream fileWave(fName[1], std::ios::binary | std::ios::ate);
+        // std::ifstream filePSD(fName[0], std::ios::binary | std::ios::ate);
+        // std::ifstream fileWave(fName[1], std::ios::binary | std::ios::ate);
         int bytes = 0;
         int i = 0;
         Encoder size;
@@ -134,8 +135,8 @@ void ConfigInputParser::WaveformNumber() {
         if (encoder.eventCounterPSD) {bytes += sizeof(size.eventCounterPSD); i++;}
         if (encoder.psdValue) {bytes += sizeof(size.psdValue); i++;}
         bytes += 2+2*i;
-        fEvents = filePSD.tellg()/bytes;
-        fWavePoints = fileWave.tellg()/(fEvents*2);
+        fEvents = std::filesystem::file_size(fName[0])/bytes;
+        fWavePoints = std::filesystem::file_size(fName[1])/(fEvents*2);
     } else {
         std::cout << "\n\n\nThe number of waveform points?" << std::endl;
         std::cin >> fWavePoints;

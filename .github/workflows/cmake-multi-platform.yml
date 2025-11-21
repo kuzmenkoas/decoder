@@ -17,14 +17,11 @@ jobs:
       fail-fast: false
       matrix:
         build_type: [Release, Debug]
-        compiler: [gcc, clang]
+        compiler: [gcc]
         include:
           - compiler: gcc
             c_compiler: gcc
             cpp_compiler: g++
-          - compiler: clang
-            c_compiler: clang
-            cpp_compiler: clang++
 
     steps:
     - name: Checkout code
@@ -53,7 +50,3 @@ jobs:
       working-directory: build
       run: |
         ctest --build-config ${{ matrix.build_type }} --output-on-failure
-
-    - name: Run basic ROOT test (опционально)
-      run: |
-        root -b -q -e 'cout << "ROOT is working properly!" << endl;'

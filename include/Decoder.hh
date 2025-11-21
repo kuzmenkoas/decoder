@@ -1,5 +1,4 @@
-#ifndef Decoder_hh
-#define Decoder_hh 1
+#pragma once
 
 // Decoder interface
 class Decoder {
@@ -9,5 +8,3 @@ public:
 
     virtual void Touch() {};
 };
-
-#endif

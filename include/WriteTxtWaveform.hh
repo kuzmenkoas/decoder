@@ -1,5 +1,4 @@
-#ifndef WriteTxtWaveform_hh
-#define WriteTxtWaveform_hh 1
+#pragma once
 
 #include "Writer.hh"
 #include <fstream>
@@ -18,5 +17,3 @@ private:
     std::ofstream fFile;
     std::string file = "waveform.txt";
 };
-
-#endif

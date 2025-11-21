@@ -1,5 +1,4 @@
-#ifndef WriterFactory_hh
-#define WriterFactory_hh 1
+#pragma once
 
 #include "Writer.hh"
 #include "WriteRootNtuple.hh"
@@ -27,5 +26,3 @@ private:
     WriterFactory();
     ~WriterFactory();
 };
-
-#endif

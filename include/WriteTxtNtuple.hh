@@ -1,5 +1,4 @@
-#ifndef WriteTxtNtuple_hh
-#define WriteTxtNtuple_hh 1
+#pragma once
 
 #include "Writer.hh"
 #include <fstream>
@@ -23,5 +22,3 @@ private:
     // output file name
     std::string file = "output.txt";
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef PlotterWaveform_hh
-#define PlotterWaveform_hh 1
+#pragma once
 
 #include "RootFile.hh"
 #include <TCanvas.h>
@@ -15,5 +14,3 @@ public:
 private:
     std::map<int, double> fWave;
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef OutputConfig_hh
-#define OutputConfig_hh 1
+#pragma once
 
 #include "WriterFactory.hh"
 
@@ -23,5 +22,3 @@ public:
 private:
     Output output;
 };
-
-#endif

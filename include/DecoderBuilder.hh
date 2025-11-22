@@ -1,5 +1,4 @@
-#ifndef DecoderBuilder_hh
-#define DecoderBuilder_hh 1
+#pragma once
 
 #include "DecoderFactory.hh"
 #include "ConfigInputParser.hh"
@@ -10,5 +9,3 @@ public:
     ~DecoderBuilder();
 private:
 };
-
-#endif

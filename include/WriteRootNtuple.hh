@@ -1,5 +1,4 @@
-#ifndef WriteRootNtuple_hh
-#define WriteRootNtuple_hh
+#pragma once
 
 #include "Writer.hh"
 #include "TTree.h"
@@ -27,5 +26,3 @@ private:
     // output file name
     TString file = "output.root";
 };
-
-#endif

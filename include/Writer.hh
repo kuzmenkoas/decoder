@@ -1,5 +1,4 @@
-#ifndef Writer_hh
-#define Writer_hh 1
+#pragma once
 
 #include "EncoderParameters.hh"
 #include "Waveform.hh"
@@ -21,5 +20,3 @@ public:
     virtual void CloseFile() {};
 private:
 };
-
-#endif

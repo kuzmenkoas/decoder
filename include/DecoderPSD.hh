@@ -1,5 +1,4 @@
-#ifndef DecoderPSD_hh
-#define DecoderPSD_hh 1
+#pragma once
 
 #include <iostream>
 #include "TString.h"
@@ -28,5 +27,3 @@ private:
     Output outWriters;
     std::vector<Writer*> fWriterVector;
 };
-
-#endif

@@ -2,10 +2,11 @@
 
 #include "OutputConfig.hh"
 #include "DecoderType.hh"
+#include "ConfigParser.hh"
 
 // Parser program configuration as console application\
 // singleton class
-class ConfigInputParser {
+class ConfigInputParser : public ConfigParser {
 public:
     static ConfigInputParser* Instance();
     void SetArgc(int argc, char* argv[]);

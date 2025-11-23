@@ -1,28 +1,27 @@
 #pragma once
 
 #include <string>
-#include <fstream>
-#include <iostream>
 #include "OutputConfig.hh"
+#include "DecoderType.hh"
 
-// OLD FILE (IS NOT USED)
-// Parser from config file
 class ConfigParser {
 public:
-    static ConfigParser* Instance();
-    void ParseFile(std::string fileName);
-    OutputConfig* GetOutputConfig() {return outputConfig;};
-    EncoderParameters GetEncoderParameters() {return encoder;};
+    ConfigParser() {};
+    ~ConfigParser() {};
 
+    virtual void SetArgc(int argc, char* argv[]) {};
+
+    virtual void Parse() {};
+    virtual void Parse(std::string fileName) {};
+
+    virtual OutputConfig* GetOutputConfig() {};
+    virtual EncoderParameters GetEncoderParameters() {};
+    virtual DecoderType GetFileType() {};
+
+    virtual int GetEvents() {return 0;};
+    virtual int GetWaveformNumber() {return 0;};
+    virtual int GetBaselineNumber() {return 0;};
+    virtual int GetShortNumber() {return 0;};
+    virtual int GetLongNumber() {return 0;};
 private:
-    ConfigParser();
-    ~ConfigParser();
-    static ConfigParser* fCfgParser;
-    std::string fFileName;
-    
-    std::ifstream OpenFile();
-    void ReadOutput(std::string key = "Output");
-    void ReadEncoder(std::string key = "Data");
-    OutputConfig* outputConfig = nullptr;
-    EncoderParameters encoder;
 };

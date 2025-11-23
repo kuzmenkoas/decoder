@@ -2,6 +2,7 @@
 #include "TMath.h"
 #include "RootFile.hh"
 #include "DecoderBuilder.hh"
+#include "ConfigParserFactory.hh"
 
 int main(int argc, char* argv[]) {
     // if input parameters less 2 (executable file and file to decode) close program

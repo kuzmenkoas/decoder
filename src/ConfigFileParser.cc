@@ -1,30 +1,30 @@
-#include "ConfigParser.hh"
+#include "ConfigFileParser.hh"
 
-ConfigParser* ConfigParser::fCfgParser = 0;
+ConfigFileParser* ConfigFileParser::fCfgParser = 0;
 
 // singleton pattern instance
-ConfigParser* ConfigParser::Instance() {
+ConfigFileParser* ConfigFileParser::Instance() {
     if (fCfgParser == 0) {
-        fCfgParser = new ConfigParser;
+        fCfgParser = new ConfigFileParser;
     }
     return fCfgParser;
 }
 
-ConfigParser::ConfigParser() {
+ConfigFileParser::ConfigFileParser() {
     // create an output struct
     outputConfig = new OutputConfig();
 }
 
-ConfigParser::~ConfigParser() {
+ConfigFileParser::~ConfigFileParser() {
 }
 
-void ConfigParser::ParseFile(std::string fileName) {
+void ConfigFileParser::ParseFile(std::string fileName) {
     fFileName = fileName;
     ReadOutput();
     ReadEncoder();
 }
 
-std::ifstream ConfigParser::OpenFile() {
+std::ifstream ConfigFileParser::OpenFile() {
     std::ifstream file(fFileName);
     try {
         if (!file.is_open()) throw std::runtime_error("Cannot open config file " + fFileName);
@@ -34,7 +34,7 @@ std::ifstream ConfigParser::OpenFile() {
     return file;
 }
 
-void ConfigParser::ReadOutput(std::string key) {
+void ConfigFileParser::ReadOutput(std::string key) {
     std::ifstream file = OpenFile();
     std::string CurStr;
     try {
@@ -57,7 +57,7 @@ void ConfigParser::ReadOutput(std::string key) {
     }
 }
 
-void ConfigParser::ReadEncoder(std::string key) {
+void ConfigFileParser::ReadEncoder(std::string key) {
     std::ifstream file = OpenFile();
     std::string CurStr;
     try {

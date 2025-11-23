@@ -1,12 +1,25 @@
 cmake_minimum_required(VERSION 3.16...3.27)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 project(decoder)
 
 find_package(ROOT REQUIRED)
 include(${ROOT_USE_FILE})
 
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
+add_subdirectory(global)
+add_subdirectory(config)
+add_subdirectory(writer)
+add_subdirectory(decoders)
+add_subdirectory(plotter)
 
-add_executable(decoder decoder.cc ${sources} ${headers})
-target_include_directories(decoder PRIVATE include)
-target_link_libraries(decoder ${ROOT_LIBRARIES})
+add_executable(decoder decoder.cc)
+
+target_link_libraries(decoder PRIVATE 
+    decoders
+    plotter
+    writer
+    config
+    global
+    ${ROOT_LIBRARIES}
+)

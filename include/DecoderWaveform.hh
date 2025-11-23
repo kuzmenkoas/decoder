@@ -6,6 +6,7 @@
 #include "WriterFactory.hh"
 #include "PlotterWaveform.hh"
 #include "ConfigInputParser.hh"
+#include "ConfigParserFactory.hh"
 #include <vector>
 #include "Plotter.hh"
 

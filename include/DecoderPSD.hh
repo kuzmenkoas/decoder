@@ -6,6 +6,7 @@
 #include "Writer.hh"
 #include "Plotter.hh"
 #include "ConfigInputParser.hh"
+#include "ConfigParserFactory.hh"
 #include "Decoder.hh"
 
 // Class to decode from binary

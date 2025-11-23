@@ -9,8 +9,11 @@ int main(int argc, char* argv[]) {
     // TODO
     // if (argc != 2 || argc != 3) return 1;
 
-    ConfigInputParser::Instance()->SetArgc(argc, argv);
-    ConfigInputParser::Instance()->StartParser();
+    // ConfigInputParser::Instance()->SetArgc(argc, argv);
+    // ConfigInputParser::Instance()->Parse();
+    ConfigParserFactory::Instance()->BuildParser()->SetArgc(argc, argv);
+    ConfigParserFactory::Instance()->BuildParser()->Parse();
+    
     DecoderBuilder* aDecoder = new DecoderBuilder(argc, argv);
     
     // TODO (not good realization)

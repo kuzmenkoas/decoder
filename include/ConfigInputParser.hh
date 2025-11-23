@@ -13,7 +13,7 @@ public:
     OutputConfig* GetOutputConfig() {return outputConfig;};
     EncoderParameters GetEncoderParameters() {return encoder;};
     DecoderType GetFileType() {return fFileType;};
-    void StartParser();
+    void Parse();
     int GetEvents() {return fEvents;};
     int GetWaveformNumber() {return fWavePoints;};
     int GetBaselineNumber() {return fBaselinePoints;};

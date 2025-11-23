@@ -25,7 +25,7 @@ void ConfigInputParser::SetArgc(int argc, char* argv[]) {
     DefineFileType();
 }
 
-void ConfigInputParser::StartParser() {
+void ConfigInputParser::Parse() {
     // create a configuration struct for output format
     outputConfig = new OutputConfig();
 

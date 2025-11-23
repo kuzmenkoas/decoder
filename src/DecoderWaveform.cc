@@ -1,7 +1,7 @@
 #include "DecoderWaveform.hh"
 
 DecoderWaveform::DecoderWaveform(TString file) : fFileName(file) {
-    Output outWriters = ConfigInputParser::Instance()->GetOutputConfig()->GetOutput();
+    Output outWriters = ConfigParserFactory::Instance()->BuildParser()->GetOutputConfig()->GetOutput();
     if (outWriters.RootNtuple) {
         fPlotter = new Plotter("Sig");
         fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::RootWaveform));
@@ -15,7 +15,7 @@ DecoderWaveform::~DecoderWaveform() {
 
 void DecoderWaveform::Touch() {
     Decode();
-    Output outWriters = ConfigInputParser::Instance()->GetOutputConfig()->GetOutput();
+    Output outWriters = ConfigParserFactory::Instance()->BuildParser()->GetOutputConfig()->GetOutput();
     if (outWriters.RootNtuple) {
         Plot();
     }
@@ -30,23 +30,23 @@ void DecoderWaveform::Decode() {
         (*it)->CreateFile();
     }
 
-    EncoderParameters fPar = ConfigInputParser::Instance()->GetEncoderParameters();
+    EncoderParameters fPar = ConfigParserFactory::Instance()->BuildParser()->GetEncoderParameters();
     int reverseCoefficient = 1;
     if (fPar.reverse) reverseCoefficient = -1;
 
     int t = 0;
     int i = 0;
-    int fWavePoint = ConfigInputParser::Instance()->GetWaveformNumber();
-    int fBaselinePoint = ConfigInputParser::Instance()->GetBaselineNumber();
-    int fShortPoint = ConfigInputParser::Instance()->GetShortNumber();
-    int fLongPoint = ConfigInputParser::Instance()->GetLongNumber();
+    int fWavePoint = ConfigParserFactory::Instance()->BuildParser()->GetWaveformNumber();
+    int fBaselinePoint = ConfigParserFactory::Instance()->BuildParser()->GetBaselineNumber();
+    int fShortPoint = ConfigParserFactory::Instance()->BuildParser()->GetShortNumber();
+    int fLongPoint = ConfigParserFactory::Instance()->BuildParser()->GetLongNumber();
     
     int iID = 0;
     int iBase = 0;
     int baseline = 0;
     int qShort = 0;
     int qLong = 0;
-    Output outWriters = ConfigInputParser::Instance()->GetOutputConfig()->GetOutput();
+    Output outWriters = ConfigParserFactory::Instance()->BuildParser()->GetOutputConfig()->GetOutput();
     while (true) {
         Waveform aWave;
         file.read(reinterpret_cast<char*>(&aWave.wave), sizeof(aWave.wave));

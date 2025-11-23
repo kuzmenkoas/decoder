@@ -1,9 +1,9 @@
 #include "DecoderPSD.hh"
 #include <fstream>
 
-DecoderPSD::DecoderPSD(TString file) : fFileName(file), fPar(ConfigInputParser::Instance()->GetEncoderParameters()) {
+DecoderPSD::DecoderPSD(TString file) : fFileName(file), fPar(ConfigParserFactory::Instance()->BuildParser()->GetEncoderParameters()) {
     fPlotter = new Plotter(fPar);
-    outWriters = ConfigInputParser::Instance()->GetOutputConfig()->GetOutput();
+    outWriters = ConfigParserFactory::Instance()->BuildParser()->GetOutputConfig()->GetOutput();
     if (outWriters.RootNtuple) fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::RootNtuple));
     if (outWriters.TxtNtuple) fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::TxtNtuple));
 }
@@ -44,8 +44,8 @@ void DecoderPSD::Decode() {
     int reverseCoefficient = 1;
     if (fPar.reverse) reverseCoefficient = -1;
 
-    int aShortPoint = ConfigInputParser::Instance()->GetShortNumber();
-    int aLongPoint = ConfigInputParser::Instance()->GetLongNumber();
+    int aShortPoint = ConfigParserFactory::Instance()->BuildParser()->GetShortNumber();
+    int aLongPoint = ConfigParserFactory::Instance()->BuildParser()->GetLongNumber();
     while (true) {
         Encoder event;
         // Unused bytes (read and forget)

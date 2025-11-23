@@ -1,6 +1,7 @@
 #include "PlotterWaveform.hh"
 #include <iostream>
 #include "ConfigInputParser.hh"
+#include "ConfigParserFactory.hh"
 
 PlotterWaveform::PlotterWaveform() {
 }
@@ -20,7 +21,7 @@ void PlotterWaveform::Write(Waveform aWave) {
 
 void PlotterWaveform::Plot() {
     TGraph* gr = new TGraph();
-    for (auto& [t, wave] : fWave) gr->SetPoint(t, t, wave/ConfigInputParser::Instance()->GetEvents());
+    for (auto& [t, wave] : fWave) gr->SetPoint(t, t, wave/ConfigParserFactory::Instance()->BuildParser()->GetEvents());
     TCanvas* c = new TCanvas("waveform", "Canvas", 800, 600);
     gr->Draw("AL");
     gr->Write("waveform");

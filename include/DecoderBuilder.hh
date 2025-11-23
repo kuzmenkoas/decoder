@@ -2,6 +2,7 @@
 
 #include "DecoderFactory.hh"
 #include "ConfigInputParser.hh"
+#include "ConfigParserFactory.hh"
 
 class DecoderBuilder {
 public:

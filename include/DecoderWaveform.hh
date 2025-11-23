@@ -1,5 +1,4 @@
-#ifndef DecoderWaveform_hh
-#define DecoderWaveform_hh 1
+#pragma once
 
 #include "Decoder.hh"
 #include "TString.h"
@@ -23,5 +22,3 @@ private:
     std::vector<Writer*> fWriterVector;
     Plotter* fPlotter = nullptr;
 };
-
-#endif

@@ -1,10 +1,7 @@
-#ifndef DecoderType_hh
-#define DecoderType_hh 1
+#pragma once
 
 enum DecoderType {
     PSDType,
     WaveformType,
     BothType
 };
-
-#endif

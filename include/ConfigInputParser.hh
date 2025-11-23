@@ -1,5 +1,4 @@
-#ifndef ConfigInputParser_hh
-#define ConfigInputParser_hh 1
+#pragma once
 
 #include "OutputConfig.hh"
 #include "DecoderType.hh"
@@ -50,5 +49,3 @@ private:
     int fLongPoints;
     std::string fName[2];
 };
-
-#endif

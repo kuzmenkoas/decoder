@@ -1,5 +1,4 @@
-#ifndef ConfigParser_hh
-#define ConfigParser_hh 1
+#pragma once
 
 #include <string>
 #include <fstream>
@@ -27,5 +26,3 @@ private:
     OutputConfig* outputConfig = nullptr;
     EncoderParameters encoder;
 };
-
-#endif

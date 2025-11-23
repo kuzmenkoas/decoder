@@ -1,5 +1,4 @@
-#ifndef WriteRootWaveform_hh
-#define WriteRootWaveform_hh 1
+#pragma once
 
 #include "Writer.hh"
 #include "TTree.h"
@@ -18,5 +17,3 @@ private:
     TTree* fTree;
     Waveform fWave;
 };
-
-#endif

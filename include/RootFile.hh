@@ -1,5 +1,4 @@
-#ifndef RootFile_hh
-#define RootFile_hh 1
+#pragma once
 
 #include "TFile.h"
 
@@ -14,5 +13,3 @@ private:
     ~RootFile();
     TFile* fFile = nullptr;
 };
-
-#endif

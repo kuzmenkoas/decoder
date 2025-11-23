@@ -1,5 +1,4 @@
-#ifndef EncoderParameters_hh
-#define EncoderParameters_hh 1
+#pragma once
 
 #include <cstdint>
 #include "TMath.h"
@@ -36,5 +35,3 @@ struct Encoder {
     int32_t qShortBaseline;
     int32_t qLongBaseline;
 };
-
-#endif

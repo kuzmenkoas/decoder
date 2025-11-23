@@ -1,5 +1,4 @@
-#ifndef Waveform_hh
-#define Waveform_hh 1
+#pragma once
 
 #include <stdio.h>
 
@@ -14,5 +13,3 @@ struct WaveformSig {
     int qShort;
     int qLong;
 };
-
-#endif

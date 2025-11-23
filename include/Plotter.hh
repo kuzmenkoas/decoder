@@ -1,5 +1,4 @@
-#ifndef Plotter_hh
-#define Plotter_hh 1
+#pragma once
 
 #include "EncoderParameters.hh"
 #include <iostream>
@@ -35,5 +34,3 @@ private:
 
     TString fId = "";
 };
-
-#endif

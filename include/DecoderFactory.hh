@@ -1,5 +1,4 @@
-#ifndef DecoderFactory_hh
-#define DecoderFactory_hh 1
+#pragma once
 
 #include "Decoder.hh"
 #include "DecoderPSD.hh"
@@ -15,5 +14,3 @@ private:
     ~DecoderFactory();
     static DecoderFactory* fDecoderFactory;
 };
-
-#endif

@@ -13,4 +13,5 @@ public:
     void Plot();
 private:
     std::map<int, double> fWave;
+    std::vector<double> fWaveVector;
 };

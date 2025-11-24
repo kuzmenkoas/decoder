@@ -5,18 +5,21 @@
 #include "ConfigParserFactory.hh"
 
 int main(int argc, char* argv[]) {
-    // if input parameters less 2 (executable file and file to decode) close program
-    // TODO
-    // if (argc != 2 || argc != 3) return 1;
+    int binCounter = 1;
+    for (int i = 0; i < argc; i++) {
+        std::string tmp = argv[i];
+        size_t dotPos = tmp.rfind('.');
+        tmp = tmp.substr(dotPos);
+        if (tmp == ".bin") binCounter++;
+        if (tmp == ".cfg") ConfigParserFactory::Instance()->SetFileName("../psdWaveform.cfg");
+    }
 
-    // ConfigInputParser::Instance()->SetArgc(argc, argv);
-    // ConfigInputParser::Instance()->Parse();
-    ConfigParserFactory::Instance()->BuildParser()->SetArgc(argc, argv);
+    ConfigParserFactory::Instance()->BuildParser()->SetArgc(binCounter, argv);
     ConfigParserFactory::Instance()->BuildParser()->Parse();
     
-    DecoderBuilder* aDecoder = new DecoderBuilder(argc, argv);
+    DecoderBuilder* aDecoder = new DecoderBuilder(binCounter, argv);
     
-    // TODO (not good realization)
+    // TODO (not good realization) smart ptr to solve
     RootFile::Instance()->CloseFile();
     
     return 0;

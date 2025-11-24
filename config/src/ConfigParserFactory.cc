@@ -23,6 +23,9 @@ void ConfigParserFactory::SetFileName(std::string name) {
 ConfigParser* ConfigParserFactory::BuildParser() {
     ConfigParser* aParser = nullptr;
     if (fName == "") aParser = ConfigInputParser::Instance();
-    // else 
+    else {
+        aParser = ConfigFileParser::Instance();
+        aParser->SetFileName(fName);
+    };
     return aParser;
 }

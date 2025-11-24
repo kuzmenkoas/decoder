@@ -13,7 +13,7 @@ public:
     virtual void SetArgc(int argc, char* argv[]) {};
 
     virtual void Parse() {};
-    virtual void Parse(std::string fileName) {};
+    virtual void SetFileName(std::string name) {};
 
     virtual OutputConfig* GetOutputConfig() {};
     virtual EncoderParameters GetEncoderParameters() {};

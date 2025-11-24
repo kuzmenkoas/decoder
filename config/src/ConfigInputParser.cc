@@ -17,6 +17,9 @@ ConfigInputParser* ConfigInputParser::Instance() {
 ConfigInputParser::ConfigInputParser() {
 }
 
+ConfigInputParser::~ConfigInputParser() {
+}
+
 void ConfigInputParser::SetArgc(int argc, char* argv[]) {
     fArgc = argc;
     if (argc == 3) {
@@ -46,9 +49,6 @@ void ConfigInputParser::Parse() {
         LongNumber();
         WaveformNumber();
     }
-}
-
-ConfigInputParser::~ConfigInputParser() {
 }
 
 // no protection from user input

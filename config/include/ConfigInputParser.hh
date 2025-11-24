@@ -37,6 +37,7 @@ private:
     void LongNumber();
 
     static ConfigInputParser* fCfgParser;
+    std::string fName[2];
     // parser results
     OutputConfig* outputConfig = nullptr;
     DecoderType fFileType;
@@ -48,5 +49,4 @@ private:
     int fBaselinePoints;
     int fShortPoints;
     int fLongPoints;
-    std::string fName[2];
 };

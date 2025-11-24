@@ -1,4 +1,5 @@
 #include "WriteRootWaveformSig.hh"
+#include <iostream>
 
 WriteRootWaveformSig::WriteRootWaveformSig() {
 }

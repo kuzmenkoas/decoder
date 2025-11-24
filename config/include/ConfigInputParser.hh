@@ -21,6 +21,10 @@ public:
     int GetBaselineNumber() {return fBaselinePoints;};
     int GetShortNumber() {return fShortPoints;};
     int GetLongNumber() {return fLongPoints;};
+
+    std::vector<PlotterHist> GetPlotterHist() {return fHist;};
+    bool IsPlotterHist() {return isPlotterHist;};
+    bool IsPlotterWaveform() {return isPlotterWaveform;};
 private:
     ConfigInputParser();
     ~ConfigInputParser();
@@ -54,4 +58,8 @@ private:
     int fBaselinePoints;
     int fShortPoints;
     int fLongPoints;
+
+    std::vector<PlotterHist> fHist;
+    bool isPlotterHist = false;
+    bool isPlotterWaveform = false;
 };

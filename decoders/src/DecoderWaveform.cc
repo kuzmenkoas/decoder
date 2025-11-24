@@ -1,13 +1,17 @@
 #include "DecoderWaveform.hh"
 
 DecoderWaveform::DecoderWaveform(TString file) : fFileName(file), fPar(ConfigParserFactory::Instance()->BuildParser()->GetEncoderParametersWaveform()) {
-    Output outWriters = ConfigParserFactory::Instance()->BuildParser()->GetOutputConfig()->GetOutput();
+    outWriters = ConfigParserFactory::Instance()->BuildParser()->GetOutputConfig()->GetOutput();
+    int kk = 0;
     if (outWriters.RootNtuple) {
         fPlotter = new Plotter("Sig");
         fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::RootWaveformSig));        
         if (fPar.entries) fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::RootWaveform));
     }
-    if (outWriters.TxtNtuple) fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::TxtWaveform));
+    if (outWriters.TxtNtuple) {
+        fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::TxtWaveformSig));
+        if (fPar.entries) fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::TxtWaveform));
+    }
 }
 
 DecoderWaveform::~DecoderWaveform() {
@@ -30,7 +34,7 @@ void DecoderWaveform::Decode() {
         (*it)->CreateFile();
     }
 
-    EncoderParameters fPar = ConfigParserFactory::Instance()->BuildParser()->GetEncoderParameters();
+    // EncoderParameters fPar = ConfigParserFactory::Instance()->BuildParser()->GetEncoderParameters();
     int reverseCoefficient = 1;
     if (fPar.reverse) reverseCoefficient = -1;
 
@@ -46,7 +50,7 @@ void DecoderWaveform::Decode() {
     int baseline = 0;
     int qShort = 0;
     int qLong = 0;
-    Output outWriters = ConfigParserFactory::Instance()->BuildParser()->GetOutputConfig()->GetOutput();
+    outWriters = ConfigParserFactory::Instance()->BuildParser()->GetOutputConfig()->GetOutput();
     while (true) {
         Waveform aWave;
         file.read(reinterpret_cast<char*>(&aWave.wave), sizeof(aWave.wave));
@@ -86,6 +90,13 @@ void DecoderWaveform::Decode() {
                         aWaveSig.qLong = reverseCoefficient*qLong;
                         
                         fWriterVector[0]->Write(aWaveSig);
+
+                        if (outWriters.TxtNtuple && outWriters.RootNtuple && fPar.entries) {
+                            fWriterVector[2]->Write(aWaveSig);
+                        }
+                        else if ((outWriters.TxtNtuple && outWriters.RootNtuple) && !fPar.entries) {
+                            fWriterVector[1]->Write(aWaveSig);
+                        }
                         fPlotter->Write(aWaveSig);
                         baseline = 0;
                         iBase = 0;

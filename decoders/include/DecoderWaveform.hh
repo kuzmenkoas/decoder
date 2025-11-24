@@ -23,4 +23,5 @@ private:
     std::vector<Writer*> fWriterVector;
     Plotter* fPlotter = nullptr;
     EncoderParameters fPar;
+    Output outWriters;
 };

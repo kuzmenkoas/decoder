@@ -35,6 +35,9 @@ Writer* WriterFactory::BuildWriter(WriterType aType) {
     case WriterType::RootWaveformSig:
         aWriter = new WriteRootWaveformSig();
         break;
+    case WriterType::TxtWaveformSig:
+        aWriter = new WriteTxtWaveformSig();
+        break;
     }
     return aWriter;
 }

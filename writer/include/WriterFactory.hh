@@ -6,13 +6,15 @@
 #include "WriteRootWaveform.hh"
 #include "WriteTxtWaveform.hh"
 #include "WriteRootWaveformSig.hh"
+#include "WriteTxtWaveformSig.hh"
 
 enum WriterType {
     RootNtuple,
     TxtNtuple,
     RootWaveform,
     TxtWaveform,
-    RootWaveformSig
+    RootWaveformSig,
+    TxtWaveformSig
 };
 
 // a factory pattern + singleton pattern

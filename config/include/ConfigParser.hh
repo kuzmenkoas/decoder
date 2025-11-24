@@ -4,6 +4,7 @@
 #include "OutputConfig.hh"
 #include "DecoderType.hh"
 #include "EncoderParameters.hh"
+#include <PlotterHist.hh>
 
 #include <iostream>
 class ConfigParser {
@@ -27,5 +28,9 @@ public:
     virtual int GetBaselineNumber() {return 0;};
     virtual int GetShortNumber() {return 0;};
     virtual int GetLongNumber() {return 0;};
+
+    virtual std::vector<PlotterHist> GetPlotterHist() {return {};};
+    virtual bool IsPlotterHist() {return false;};
+    virtual bool IsPlotterWaveform() {return false;};
 private:
 };

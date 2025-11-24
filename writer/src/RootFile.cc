@@ -1,5 +1,5 @@
 #include "RootFile.hh"
-#include <iostream>
+#include "TString.h"
 
 RootFile* RootFile::fRootFile = 0;
 
@@ -11,7 +11,8 @@ RootFile* RootFile::Instance() {
 }
 
 RootFile::RootFile() {
-    fFile = new TFile("output.root", "RECREATE");
+    TString fFileName = ConfigParserFactory::Instance()->BuildParser()->GetOutputFileName() + ".root";
+    fFile = new TFile(fFileName, "RECREATE");
 }
 
 RootFile::~RootFile() {

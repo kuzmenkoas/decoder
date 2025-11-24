@@ -10,8 +10,8 @@ include(${ROOT_USE_FILE})
 add_subdirectory(global)
 add_subdirectory(config)
 add_subdirectory(writer)
-add_subdirectory(decoders)
 add_subdirectory(plotter)
+add_subdirectory(decoders)
 
 add_executable(decoder decoder.cc)
 

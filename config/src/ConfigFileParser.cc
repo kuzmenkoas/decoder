@@ -20,11 +20,10 @@ ConfigFileParser::~ConfigFileParser() {
 
 void ConfigFileParser::SetArgc(int argc, char* argv[]) {
     fArgc = argc;
-    if (argc == 3) {
-        fName[0] = argv[1];
-        fName[1] = argv[2];
-    }
+    fName[0] = argv[1];
+    if (argc == 3) fName[1] = argv[2];
     DefineFileType();
+    DefineOutputFileName();
 }
 
 void ConfigFileParser::DefineFileType() {
@@ -38,6 +37,15 @@ void ConfigFileParser::DefineFileType() {
             if (CurStr.compare(0, keyWave.size(), keyWave) == 0) {fFileType = DecoderType::WaveformType; break;}
         }
     } else fFileType = DecoderType::BothType;
+}
+
+void ConfigFileParser::DefineOutputFileName() {
+    std::string name = fName[0];
+    name = name.substr(name.find_first_of("_")+1);
+    name = name.substr(name.find_first_of("_")+1);
+    name = name.substr(name.find_first_of("_")+1);
+    name = name.substr(0, name.find_first_of("."));
+    fOutputFileName = name;
 }
 
 void ConfigFileParser::WaveformNumber() {
@@ -157,7 +165,7 @@ void ConfigFileParser::ReadWaveformData(std::string key) {
                         if (CurStr == "qShort") encoderWaveform.qShort = true;
                         if (CurStr == "qLong") encoderWaveform.qLong = true;
                         if (CurStr == "baseline") encoderWaveform.baseline = true;
-
+                        if (CurStr == "entries") encoderWaveform.entries = true;
                     }
                 }
             }
@@ -177,7 +185,7 @@ void ConfigFileParser::ReadWaveformConfig(std::string key) {
                 while (getline (file, CurStr) && CurStr.compare("WaveformConfig") !=0) {
                     if (CurStr.c_str()[0]=='+') {
                         size_t found = CurStr.find_first_of(" ");
-                        CurStr = CurStr = CurStr.substr(found+1);
+                        CurStr = CurStr.substr(found+1);
 
                         std::string name = CurStr.substr(0, CurStr.find_first_of(" "));
                         std::string tmp = CurStr.substr(CurStr.find_first_of(" ")+1);

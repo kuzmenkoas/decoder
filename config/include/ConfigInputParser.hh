@@ -14,6 +14,8 @@ public:
     EncoderParameters GetEncoderParameters() {return encoder;};
     DecoderType GetFileType() {return fFileType;};
     void Parse();
+
+    std::string GetOutputFileName() {return fOutputFileName;};
     int GetEvents() {return fEvents;};
     int GetWaveformNumber() {return fWavePoints;};
     int GetBaselineNumber() {return fBaselinePoints;};
@@ -30,6 +32,7 @@ private:
     void Reverse();
 
     void DefineFileType();
+    void DefineOutputFileName();
 
     void WaveformNumber();
     void BaselineNumber();
@@ -38,6 +41,8 @@ private:
 
     static ConfigInputParser* fCfgParser;
     std::string fName[2];
+    std::string fOutputFileName;
+
     // parser results
     OutputConfig* outputConfig = nullptr;
     DecoderType fFileType;

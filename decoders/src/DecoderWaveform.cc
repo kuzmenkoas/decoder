@@ -1,11 +1,11 @@
 #include "DecoderWaveform.hh"
 
-DecoderWaveform::DecoderWaveform(TString file) : fFileName(file) {
+DecoderWaveform::DecoderWaveform(TString file) : fFileName(file), fPar(ConfigParserFactory::Instance()->BuildParser()->GetEncoderParametersWaveform()) {
     Output outWriters = ConfigParserFactory::Instance()->BuildParser()->GetOutputConfig()->GetOutput();
     if (outWriters.RootNtuple) {
         fPlotter = new Plotter("Sig");
-        fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::RootWaveform));
         fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::RootWaveformSig));        
+        if (fPar.entries) fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::RootWaveform));
     }
     if (outWriters.TxtNtuple) fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::TxtWaveform));
 }
@@ -85,7 +85,7 @@ void DecoderWaveform::Decode() {
                         aWaveSig.qShort = reverseCoefficient*qShort;
                         aWaveSig.qLong = reverseCoefficient*qLong;
                         
-                        fWriterVector[1]->Write(aWaveSig);
+                        fWriterVector[0]->Write(aWaveSig);
                         fPlotter->Write(aWaveSig);
                         baseline = 0;
                         iBase = 0;

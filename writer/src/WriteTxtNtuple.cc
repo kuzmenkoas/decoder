@@ -17,8 +17,6 @@ void WriteTxtNtuple::Write(Encoder encoder, EncoderParameters par) {
     if (par.eventCounter) fFile << encoder.eventCounter << " ";
     if (par.eventCounterPSD) fFile << encoder.eventCounterPSD << " ";
     if (par.psdValue) fFile << encoder.psdValue << " ";
-    if (par.qShort && par.baseline) fFile << encoder.qShortBaseline << " ";
-    if (par.qLong && par.baseline) fFile << encoder.qLongBaseline << " ";
     fFile << std::endl;
 }
 
@@ -35,8 +33,6 @@ void WriteTxtNtuple::CreateFile(EncoderParameters par) {
     if (par.eventCounter) fFile << "eventCounter" << " ";
     if (par.eventCounterPSD) fFile << "eventCounterPSD" << " ";
     if (par.psdValue) fFile << "psdValue" << " ";    
-    if (par.qShort && par.baseline) fFile << "qShort-baseline" << " ";    
-    if (par.qLong && par.baseline) fFile << "qLong-baseline" << " ";    
     fFile << std::endl;
 }
 

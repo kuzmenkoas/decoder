@@ -22,4 +22,5 @@ private:
     TString fFileName;
     std::vector<Writer*> fWriterVector;
     Plotter* fPlotter = nullptr;
+    EncoderParameters fPar;
 };

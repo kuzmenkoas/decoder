@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TFile.h"
+#include "ConfigParserFactory.hh"
 
 class RootFile {
 public:

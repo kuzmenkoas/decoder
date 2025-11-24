@@ -16,7 +16,9 @@ public:
     void Parse();
     OutputConfig* GetOutputConfig() {return outputConfig;};
     EncoderParameters GetEncoderParameters() {return encoder;};
+    EncoderParameters GetEncoderParametersWaveform() {return encoderWaveform;};
 
+    std::string GetOutputFileName() {return fOutputFileName;};
     int GetEvents() {return fEvents;};
     int GetWaveformNumber() {return fWavePoints;};
     int GetBaselineNumber() {return fBaselinePoints;};
@@ -28,10 +30,12 @@ private:
     ~ConfigFileParser();
 
     void DefineFileType();
+    void DefineOutputFileName();
 
     static ConfigFileParser* fCfgParser;
     std::string fName[2];
     std::string fFileName;
+    std::string fOutputFileName;
     
     std::ifstream OpenFile();
     void ReadOutput(std::string key = "Output");

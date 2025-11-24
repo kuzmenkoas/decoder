@@ -27,6 +27,7 @@ void ConfigInputParser::SetArgc(int argc, char* argv[]) {
         fName[1] = argv[2];
     }
     DefineFileType();
+    DefineOutputFileName();
 }
 
 void ConfigInputParser::Parse() {
@@ -116,6 +117,15 @@ void ConfigInputParser::DefineFileType() {
         if (i == 1) fFileType = DecoderType::PSDType;
         if (i == 2) fFileType = DecoderType::WaveformType;
     } else fFileType = DecoderType::BothType;
+}
+
+void ConfigInputParser::DefineOutputFileName() {
+    std::string name = fName[0];
+    name = name.substr(name.find_first_of("_")+1);
+    name = name.substr(name.find_first_of("_")+1);
+    name = name.substr(name.find_first_of("_")+1);
+    name = name.substr(0, name.find_first_of("."));
+    fOutputFileName = name;
 }
 
 void ConfigInputParser::WaveformNumber() {

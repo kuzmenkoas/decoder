@@ -72,8 +72,6 @@ void DecoderPSD::Decode() {
         if (fPar.eventCounter) file.read(reinterpret_cast<char*>(&event.eventCounter), sizeof(event.eventCounter));
         if (fPar.eventCounterPSD) file.read(reinterpret_cast<char*>(&event.eventCounterPSD), sizeof(event.eventCounterPSD));
         if (fPar.psdValue) file.read(reinterpret_cast<char*>(&event.psdValue), sizeof(event.psdValue));
-        if (fPar.qShort && fPar.baseline) event.qShortBaseline = event.qShort-aShortPoint*event.baseline;
-        if (fPar.qLong && fPar.baseline) event.qLongBaseline = event.qLong-aLongPoint*event.baseline;
         if (file.eof()) break;
 
         // send to writer event

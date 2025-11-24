@@ -17,8 +17,7 @@ struct EncoderParameters {
     Bool_t eventCounterPSD = false;
     Bool_t psdValue = false;
     Bool_t reverse = false;
-    Bool_t qShortBaseline = false;
-    Bool_t qLongBaseline = false;
+    Bool_t entries = false;
 };
 
 // sizes of parameters to encode
@@ -32,6 +31,4 @@ struct Encoder {
     uint32_t eventCounter;
     uint32_t eventCounterPSD;
     int16_t psdValue;
-    int32_t qShortBaseline;
-    int32_t qLongBaseline;
 };

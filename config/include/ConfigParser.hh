@@ -5,6 +5,7 @@
 #include "DecoderType.hh"
 #include "EncoderParameters.hh"
 
+#include <iostream>
 class ConfigParser {
 public:
     ConfigParser() {};
@@ -15,10 +16,12 @@ public:
     virtual void Parse() {};
     virtual void SetFileName(std::string name) {};
 
-    virtual OutputConfig* GetOutputConfig() {};
-    virtual EncoderParameters GetEncoderParameters() {};
-    virtual DecoderType GetFileType() {};
+    virtual OutputConfig* GetOutputConfig() {return new OutputConfig();};
+    virtual EncoderParameters GetEncoderParameters() {return EncoderParameters{};};
+    virtual EncoderParameters GetEncoderParametersWaveform() {return EncoderParameters{};};
+    virtual DecoderType GetFileType() {return DecoderType{};};
 
+    virtual std::string GetOutputFileName() {return "";};
     virtual int GetEvents() {return 0;};
     virtual int GetWaveformNumber() {return 0;};
     virtual int GetBaselineNumber() {return 0;};

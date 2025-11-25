@@ -61,7 +61,6 @@ void Plotter::Plot() {
     std::vector<PlotterHist> fHist = ConfigParserFactory::Instance()->BuildParser()->GetPlotterHist();
     for (int i = 0; i < fHist.size(); i++) {
         TString name = fHist[i].parameter+fHist[i].decoder;
-        std::cout << name << std::endl;
         TCanvas* c = new TCanvas(name, "Canvas", 800, 600);
         hist[i]->Draw();
         hist[i]->Write(name);

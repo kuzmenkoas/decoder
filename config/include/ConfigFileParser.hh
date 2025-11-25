@@ -17,7 +17,8 @@ public:
     OutputConfig* GetOutputConfig() {return outputConfig;};
     EncoderParameters GetEncoderParameters() {return encoder;};
     EncoderParameters GetEncoderParametersWaveform() {return encoderWaveform;};
-
+    DecoderType GetFileType() {return fFileType;};
+    
     std::string GetOutputFileName() {return fOutputFileName;};
     int GetEvents() {return fEvents;};
     int GetWaveformNumber() {return fWavePoints;};
@@ -31,6 +32,9 @@ public:
 private:
     ConfigFileParser();
     ~ConfigFileParser();
+
+    void Reverse();
+    void WaveformNumberRead();
 
     void DefineFileType();
     void DefineOutputFileName();

@@ -66,8 +66,8 @@ void ConfigFileParser::WaveformNumber() {
         fEvents = std::filesystem::file_size(fName[0])/bytes;
         fWavePoints = std::filesystem::file_size(fName[1])/(fEvents*2);
     } else {
-        std::cout << "\n\n\nThe number of waveform points?" << std::endl;
-        std::cin >> fWavePoints;
+        WaveformNumberRead();
+        fEvents = std::filesystem::file_size(fName[0])/(fWavePoints*2);
     }
 }
 
@@ -78,7 +78,7 @@ void ConfigFileParser::Parse() {
         ReadEncoder();
     }
     // start a file parser for reversing
-    // if (((encoder.qShort || encoder.qLong || encoder.baseline) && fFileType == DecoderType::PSDType) || fFileType == DecoderType::WaveformType) Reverse();
+    if (((encoder.qShort || encoder.qLong || encoder.baseline) && fFileType == DecoderType::PSDType) || (fFileType == DecoderType::WaveformType) || (fFileType == DecoderType::BothType)) Reverse();
 
     if (fFileType == DecoderType::WaveformType || fFileType == DecoderType::BothType) {
         ReadWaveformData();
@@ -234,6 +234,52 @@ void ConfigFileParser::ReadPlotterConfig(std::string key) {
                         hist.min = std::stoi(min);
                         hist.max = std::stoi(max);
                         fHist.push_back(hist);
+                    }
+                }
+            }
+        }
+    } catch (const std::exception& e) {
+      std::cerr << "Exception: " << e.what() << std::endl;
+      abort();
+    }
+}
+
+void ConfigFileParser::Reverse() {
+    std::ifstream file = OpenFile();
+    std::string CurStr;
+
+    std::string key = "Reverse true";
+    try {
+        while(getline (file,CurStr)){
+            if (CurStr.compare(0, key.size(), key) == 0) {
+                encoderWaveform.reverse = true;
+                encoder.reverse = true;
+            }
+        }
+    } catch (const std::exception& e) {
+      std::cerr << "Exception: " << e.what() << std::endl;
+      abort();
+    }
+}
+
+void ConfigFileParser::WaveformNumberRead() {
+    std::ifstream file = OpenFile();
+    std::string CurStr;
+
+    std::string key = "WaveformConfig";
+    try {
+        while(getline (file,CurStr)){
+            if (CurStr.compare(0, key.size(), key) == 0) {
+                while (getline (file, CurStr) && CurStr.compare("WaveformConfig") !=0) {
+                    if (CurStr.c_str()[0]=='+') {
+                        size_t found = CurStr.find_first_of(" ");
+                        CurStr = CurStr.substr(found+1);
+
+                        std::string name = CurStr.substr(0, CurStr.find_first_of(" "));
+                        std::string tmp = CurStr.substr(CurStr.find_first_of(" ")+1);
+                        std::string value = tmp.substr(tmp.find_first_of(" ")+1);
+
+                        if (name == "wavelength") fWavePoints = std::stoi(value);
                     }
                 }
             }

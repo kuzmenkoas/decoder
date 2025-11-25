@@ -1,5 +1,6 @@
 #include "WriteRootWaveformSig.hh"
 #include <iostream>
+#include "ConfigParserFactory.hh"
 
 WriteRootWaveformSig::WriteRootWaveformSig() {
 }
@@ -14,13 +15,14 @@ void WriteRootWaveformSig::Write(WaveformSig aWave) {
 }
 
 void WriteRootWaveformSig::CreateFile() {
+    EncoderParameters fPar = ConfigParserFactory::Instance()->BuildParser()->GetEncoderParametersWaveform();
     RootFile* fRootFile = RootFile::Instance();
     TFile* fFile = fRootFile->GetFile();
     fTree = new TTree("signal", "signal");
 
-    fTree->Branch("baseline", &fWave.baseline);
-    fTree->Branch("qShort", &fWave.qShort);
-    fTree->Branch("qLong", &fWave.qLong);
+    if (fPar.qShort) fTree->Branch("qShort", &fWave.qShort);
+    if (fPar.qLong) fTree->Branch("qLong", &fWave.qLong);
+    if (fPar.baseline) fTree->Branch("baseline", &fWave.baseline);
 }
 
 void WriteRootWaveformSig::CloseFile() {

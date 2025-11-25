@@ -15,6 +15,9 @@ ConfigInputParser* ConfigInputParser::Instance() {
 }
 
 ConfigInputParser::ConfigInputParser() {
+    encoderWaveform.qShort = true;
+    encoderWaveform.qLong = true;
+    encoderWaveform.baseline = true;
 }
 
 ConfigInputParser::~ConfigInputParser() {
@@ -42,7 +45,7 @@ void ConfigInputParser::Parse() {
         Parameters();
     }
     // start a console user input for reversing
-    if (((encoder.qShort || encoder.qLong || encoder.baseline) && fFileType == DecoderType::PSDType) || fFileType == DecoderType::WaveformType) Reverse();
+    if (((encoder.qShort || encoder.qLong || encoder.baseline) && fFileType == DecoderType::PSDType) || (fFileType == DecoderType::WaveformType) || (fFileType == DecoderType::BothType)) Reverse();
 
     if (fFileType == DecoderType::WaveformType || fFileType == DecoderType::BothType) {
         BaselineNumber();
@@ -104,7 +107,10 @@ void ConfigInputParser::Reverse() {
     std::cout << " (2) Not" << std::endl;
     int val;
     std::cin >> val;
-    if (val == 1) encoder.reverse = true;
+    if (val == 1) {
+        encoderWaveform.reverse = true;
+        encoder.reverse = true;
+    }
 }
 
 void ConfigInputParser::DefineFileType() {
@@ -131,8 +137,6 @@ void ConfigInputParser::DefineOutputFileName() {
 
 void ConfigInputParser::WaveformNumber() {
     if (!(fFileType == DecoderType::WaveformType)) {
-        // std::ifstream filePSD(fName[0], std::ios::binary | std::ios::ate);
-        // std::ifstream fileWave(fName[1], std::ios::binary | std::ios::ate);
         int bytes = 0;
         int i = 0;
         Encoder size;

@@ -13,9 +13,9 @@ add_subdirectory(writer)
 add_subdirectory(plotter)
 add_subdirectory(decoders)
 
-add_executable(decoder decoder.cc)
+add_executable(decoder2 decoder.cc)
 
-target_link_libraries(decoder PRIVATE 
+target_link_libraries(decoder2 PRIVATE 
     decoders
     plotter
     writer

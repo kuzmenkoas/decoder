@@ -12,6 +12,7 @@ public:
     void SetArgc(int argc, char* argv[]);
     OutputConfig* GetOutputConfig() {return outputConfig;};
     EncoderParameters GetEncoderParameters() {return encoder;};
+    EncoderParameters GetEncoderParametersWaveform() {return encoderWaveform;};
     DecoderType GetFileType() {return fFileType;};
     void Parse();
 
@@ -54,6 +55,7 @@ private:
     OutputConfig* outputConfig = nullptr;
     DecoderType fFileType;
     EncoderParameters encoder;
+    EncoderParameters encoderWaveform;
     int fArgc;
     char* fArgv;
     int fEvents;

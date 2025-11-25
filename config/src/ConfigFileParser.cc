@@ -85,6 +85,8 @@ void ConfigFileParser::Parse() {
         ReadWaveformConfig();
         WaveformNumber();
     }
+
+    ReadPlotterConfig();
 }
 
 std::ifstream ConfigFileParser::OpenFile() {
@@ -194,6 +196,44 @@ void ConfigFileParser::ReadWaveformConfig(std::string key) {
                         if (name == "baseline") fBaselinePoints = std::stoi(value);
                         if (name == "qShort") fShortPoints = std::stoi(value);
                         if (name == "qLong") fLongPoints = std::stoi(value);
+                    }
+                }
+            }
+        }
+    } catch (const std::exception& e) {
+      std::cerr << "Exception: " << e.what() << std::endl;
+      abort();
+    }
+}
+
+void ConfigFileParser::ReadPlotterConfig(std::string key) {
+    std::ifstream file = OpenFile();
+    std::string CurStr;
+    try {
+        while(getline (file,CurStr)){
+            if (CurStr.compare(0, key.size(), key) == 0) {
+                while (getline (file, CurStr)) {
+                    if (CurStr.c_str()[0]=='+') {
+                        size_t found = CurStr.find_first_of(" ");
+                        CurStr = CurStr.substr(found+1);
+
+                        std::string decoder = CurStr.substr(0, CurStr.find_first_of(" "));
+                        std::string tmp = CurStr.substr(CurStr.find_first_of(" ")+1);
+                        std::string parameter = tmp.substr(0, tmp.find_first_of(" "));
+                        tmp = tmp.substr(tmp.find_first_of(" ")+1);
+                        std::string Nbins = tmp.substr(0, tmp.find_first_of(" ")+1);
+                        tmp = tmp.substr(tmp.find_first_of(" ")+1);
+                        std::string min = tmp.substr(0, tmp.find_first_of(" ")+1);
+                        tmp = tmp.substr(tmp.find_first_of(" ")+1);
+                        std::string max = tmp.substr(tmp.find_first_of(" ")+1);
+                        
+                        PlotterHist hist;
+                        hist.parameter = parameter;
+                        hist.decoder = decoder;
+                        hist.Nbins = std::stoi(Nbins);
+                        hist.min = std::stoi(min);
+                        hist.max = std::stoi(max);
+                        fHist.push_back(hist);
                     }
                 }
             }

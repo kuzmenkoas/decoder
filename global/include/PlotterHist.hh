@@ -1,11 +1,12 @@
 #pragma once
 
 #include <string>
+#include "TString.h"
 
 struct PlotterHist {
-    std::string decoder;
-    std::string parameter;
+    TString decoder;
+    TString parameter;
     int Nbins;
-    int min;
-    int max;
+    double min;
+    double max;
 };

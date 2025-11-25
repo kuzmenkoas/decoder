@@ -3,6 +3,7 @@
 #include "RootFile.hh"
 #include "DecoderBuilder.hh"
 #include "ConfigParserFactory.hh"
+#include "Plotter.hh"
 
 int main(int argc, char* argv[]) {
     int binCounter = 1;
@@ -11,14 +12,14 @@ int main(int argc, char* argv[]) {
         size_t dotPos = tmp.rfind('.');
         tmp = tmp.substr(dotPos);
         if (tmp == ".bin") binCounter++;
-        if (tmp == ".cfg") ConfigParserFactory::Instance()->SetFileName("../psdWaveform.cfg");
+        if (tmp == ".cfg") ConfigParserFactory::Instance()->SetFileName(argv[i]);
     }
 
     ConfigParserFactory::Instance()->BuildParser()->SetArgc(binCounter, argv);
     ConfigParserFactory::Instance()->BuildParser()->Parse();
     
     DecoderBuilder* aDecoder = new DecoderBuilder(binCounter, argv);
-    
+    Plotter::Instance()->Plot();
     // TODO (not good realization) smart ptr to solve
     RootFile::Instance()->CloseFile();
     

@@ -43,6 +43,9 @@ private:
     void ShortNumber();
     void LongNumber();
 
+    void Plots();
+    void ConfigParameter(TString decoder, TString par);
+
     static ConfigInputParser* fCfgParser;
     std::string fName[2];
     std::string fOutputFileName;

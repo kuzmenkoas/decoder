@@ -45,6 +45,7 @@ private:
     void ReadEncoder(std::string key = "DataPSD");
     void ReadWaveformData(std::string key = "DataWaveform");
     void ReadWaveformConfig(std::string key = "WaveformConfig");
+    void ReadPlotterConfig(std::string key = "Histogram");
     void WaveformNumber();
     OutputConfig* outputConfig = nullptr;
     EncoderParameters encoder;

@@ -6,31 +6,35 @@
 #include <TCanvas.h>
 #include "RootFile.hh"
 #include "Waveform.hh"
+#include "ConfigParserFactory.hh"
 
-struct PlotParameters {
-    Int_t Nbins;
-    Double_t minVal;
-    Double_t maxVal;
-    TString name;
+struct PlotConfig {
+    int qShort = -1;
+    int qLong = -1;
+    int cfd_y1 = -1;
+    int cfd_y2 = -1;
+    int baseline = -1;
+    int height = -1;
+    int eventCounter = -1;
+    int eventCounterPSD = -1;
+    int psdValue = -1;
 };
 
 class Plotter {
 public:
-    Plotter(EncoderParameters par);
-    Plotter(TString id);
-    ~Plotter();
+    static Plotter* Instance();
+
     void Write(Encoder event);
     void Write(WaveformSig aWave);
     void Plot();
 private:
-    void ConfigPlotter();
-    void ConfigPlotter(TString id);
-    void ConfigParameter(TString par);
-    void CreateHistograms();
-    EncoderParameters fParPlot;
-    EncoderParameters fPar;
-    std::vector<TH1*> hist;
-    std::vector<PlotParameters> pltPar;
+    Plotter();
+    ~Plotter();
 
-    TString fId = "";
+    static Plotter* fPlotter;
+    void CreateHistograms();
+
+    PlotConfig fPSD;
+    PlotConfig fWaveform;
+    std::vector<TH1*> hist;
 };

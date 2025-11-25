@@ -50,6 +50,7 @@ void ConfigInputParser::Parse() {
         LongNumber();
         WaveformNumber();
     }
+    Plots();
 }
 
 // no protection from user input
@@ -166,4 +167,61 @@ void ConfigInputParser::LongNumber() {
 void ConfigInputParser::BaselineNumber() {
     std::cout << "\n\n\nThe number of baseline points?" << std::endl;
     std::cin >> fBaselinePoints;
+}
+
+void ConfigInputParser::Plots() {
+    if (fFileType == DecoderType::PSDType || fFileType == DecoderType::BothType) {
+        std::cout << "\n\n\nChoose parameter to plot (multiply input, example: 123 for 3 parameters to plot)" << std::endl;
+        int i = 0;
+        std::cout << " (" << i++ << ") exit" << std::endl;
+        if (encoder.qShort) std::cout << " (" << i++ << ") qShort" << std::endl;
+        if (encoder.qLong) std::cout << " (" << i++ << ") qLong" << std::endl;
+        if (encoder.cfd_y1) std::cout << " (" << i++ << ") cfd_y1" << std::endl;
+        if (encoder.cfd_y2) std::cout << " (" << i++ << ") cfd_y2" << std::endl;
+        if (encoder.baseline) std::cout << " (" << i++ << ") baseline" << std::endl;
+        if (encoder.height) std::cout << " (" << i++ << ") height" << std::endl;
+        if (encoder.eventCounter) std::cout << " (" << i++ << ") eventCounter" << std::endl;
+        if (encoder.eventCounterPSD) std::cout << " (" << i++ << ") eventCounterPSD" << std::endl;
+        if (encoder.psdValue) std::cout << " (" << ++i << ") psdValue" << std::endl;
+
+        std::string val;
+        std::cin >> val;
+        for (int k = 0; k < val.length(); k++) {
+            std::string tmp(1, val[k]);
+            int f = 0;
+            if (tmp == std::to_string(f++)) break;
+            if (encoder.qShort) if (tmp == std::to_string(f++)) ConfigParameter("PSD", "qShort");
+            if (encoder.qLong) if (tmp == std::to_string(f++)) ConfigParameter("PSD", "qLong");
+            if (encoder.cfd_y1) if (tmp == std::to_string(f++)) ConfigParameter("PSD", "cfd_y1");
+            if (encoder.cfd_y2) if (tmp == std::to_string(f++)) ConfigParameter("PSD", "cfd_y2");
+            if (encoder.baseline) if (tmp == std::to_string(f++)) ConfigParameter("PSD", "baseline");
+            if (encoder.height) if (tmp == std::to_string(f++)) ConfigParameter("PSD", "height");
+            if (encoder.eventCounter) if (tmp == std::to_string(f++)) ConfigParameter("PSD", "eventCounter");
+            if (encoder.eventCounterPSD) if (tmp == std::to_string(f++)) ConfigParameter("PSD", "eventCounterPSD");
+            if (encoder.psdValue) if (tmp == std::to_string(f++)) ConfigParameter("PSD", "psdValue");
+        }
+    }
+}
+
+void ConfigInputParser::ConfigParameter(TString decoder, TString par) {
+    PlotterHist tmpPar;
+    tmpPar.decoder = decoder;
+    std::cout << "\n\n\nConfigure a plot from " + decoder + " data for parameter " + par << std::endl;
+    tmpPar.parameter = par;
+
+    std::cout << "\nEnter number of bins" << std::endl;
+    int tmpNbins;
+    std::cin >> tmpNbins;
+    tmpPar.Nbins = tmpNbins;
+
+    std::cout << "\nEnter min value of histogram" << std::endl;
+    double tmpMin;
+    std::cin >> tmpMin;
+    tmpPar.min = tmpMin;
+
+    std::cout << "\nEnter max value of histogram" << std::endl;
+    double tmpMax;
+    std::cin >> tmpMax;
+    tmpPar.max = tmpMax;
+    fHist.push_back(tmpPar);
 }

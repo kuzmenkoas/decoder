@@ -2,7 +2,7 @@
 #include <fstream>
 
 DecoderPSD::DecoderPSD(TString file) : fFileName(file), fPar(ConfigParserFactory::Instance()->BuildParser()->GetEncoderParameters()) {
-    fPlotter = new Plotter(fPar);
+    fPlotter = Plotter::Instance();
     outWriters = ConfigParserFactory::Instance()->BuildParser()->GetOutputConfig()->GetOutput();
     if (outWriters.RootNtuple) fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::RootNtuple));
     if (outWriters.TxtNtuple) fWriterVector.push_back(WriterFactory::Instance()->BuildWriter(WriterType::TxtNtuple));
@@ -15,7 +15,7 @@ void DecoderPSD::Touch() {
     // decode and write as ntuple to root or txt or both
     Decode();
     // starts configuration of histograms if need and saves to root and png
-    Plot();
+    // Plot();
 }
 
 // estimates parameters to encode

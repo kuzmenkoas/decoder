@@ -53,14 +53,15 @@ void Plotter::CreateHistograms() {
         if (fHist[i].decoder == "Waveform" && fHist[i].parameter == "qLong") fWaveform.qLong = i;
         if (fHist[i].decoder == "Waveform" && fHist[i].parameter == "baseline") fWaveform.baseline = i;
 
-        hist.push_back(new TH1D(fHist[i].parameter+fHist[i].decoder, fHist[i].parameter+fHist[i].decoder, fHist[i].Nbins, fHist[i].min, fHist[i].max));
+        TString name((fHist[i].parameter + fHist[i].decoder).c_str());
+        hist.push_back(new TH1D(name, name, fHist[i].Nbins, fHist[i].min, fHist[i].max));
     }
 }
 
 void Plotter::Plot() {
     std::vector<PlotterHist> fHist = ConfigParserFactory::Instance()->BuildParser()->GetPlotterHist();
     for (int i = 0; i < fHist.size(); i++) {
-        TString name = fHist[i].parameter+fHist[i].decoder;
+        TString name((fHist[i].parameter+fHist[i].decoder).c_str());
         TCanvas* c = new TCanvas(name, "Canvas", 800, 600);
         hist[i]->Draw();
         hist[i]->Write(name);

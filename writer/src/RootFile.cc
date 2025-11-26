@@ -11,7 +11,8 @@ RootFile* RootFile::Instance() {
 }
 
 RootFile::RootFile() {
-    TString fFileName = ConfigParserFactory::Instance()->BuildParser()->GetOutputFileName() + ".root";
+    std::string tmp = ConfigParserFactory::Instance()->BuildParser()->GetOutputFileName() + ".root";
+    TString fFileName(tmp.c_str());
     fFile = new TFile(fFileName, "RECREATE");
 }
 

@@ -4,8 +4,8 @@
 #include "TString.h"
 
 struct PlotterHist {
-    TString decoder;
-    TString parameter;
+    std::string decoder;
+    std::string parameter;
     int Nbins;
     double min;
     double max;

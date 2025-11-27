@@ -16,6 +16,7 @@ public:
 
     virtual void Parse() {};
     virtual void SetFileName(std::string name) {};
+    virtual std::string GetFileName() {return "";};
 
     virtual OutputConfig* GetOutputConfig() {return new OutputConfig();};
     virtual EncoderParameters GetEncoderParameters() {return EncoderParameters{};};

@@ -13,6 +13,7 @@ public:
     static ConfigFileParser* Instance();
     void SetArgc(int argc, char* argv[]);
     void SetFileName(std::string name) {fFileName = name;};
+    std::string GetFileName() {return fFileName;};
     void Parse();
     OutputConfig* GetOutputConfig() {return outputConfig;};
     EncoderParameters GetEncoderParameters() {return encoder;};

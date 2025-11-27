@@ -20,8 +20,8 @@ ConfigFileParser::~ConfigFileParser() {
 
 void ConfigFileParser::SetArgc(int argc, char* argv[]) {
     fArgc = argc;
-    fName[0] = argv[1];
-    if (argc == 3) fName[1] = argv[2];
+    fName[0] = argv[2];
+    if (argc == 3) fName[1] = argv[3];
     DefineFileType();
     DefineOutputFileName();
 }

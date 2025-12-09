@@ -1,6 +1,6 @@
 # Description
 Decoder for Digitizer version 1.1.1 output (PSD and Waveform). Reads binary files, saves results in root and txt formats.
-Open source: [GitHub](https://github.com/kuzmenkoas/digitizer-decoder).
+Open source: [GitHub](https://github.com/kuzmenkoas/decoder.git).
 Can be installed for Linux and Windows.
 
 # Requirements
@@ -11,8 +11,8 @@ Can be installed for Linux and Windows.
 # Installation guide
 ## Linux
 ```bash
-git clone https://github.com/kuzmenkoas/digitizer-decoder.git
-cd digitizer-decoder
+git clone https://github.com/kuzmenkoas/decoder.git
+cd decoder
 mkdir build
 cd build
 cmake ..
@@ -46,6 +46,7 @@ decoder.exe ${path to bin file PSD} ${path to bin file Waveform}
 Note: first file is PSD and second Waveform strictly!
 
 # Example
+For program with console configuration use.
 If data files are filePSD.bin and fileWaveform.bin in directory data use:
 * To start decoder for PSD file only
 ```powershell
@@ -60,7 +61,23 @@ decoder.exe data/fileWaveform.bin
 decoder.exe data/filePSD.bin data/fileWaveform.bin
 ```
 
+For program with file configuration use.
+If data files are filePSD.bin and fileWaveform.bin in directory data use:
+* To start decoder for PSD file only
+```powershell
+decoder.exe cfg/psd.cfg data/filePSD.bin
+```
+* To start decoder for Waveform file only
+```powershell
+decoder.exe cfg/waveform.cfg data/fileWaveform.bin
+```
+* To start decoder for both files
+```powershell
+decoder.exe cfg/psdWaveform.cfg data/filePSD.bin data/fileWaveform.bin
+```
+
 # Configuration
+## Input Parser
 After start of program, there will be different cmd input modules start (depend on input data). They are needable for configuration of progrma (parameters that application does not know). Let's see all of them.
 
 **1. Format of input file**
@@ -191,6 +208,174 @@ This configure the maximum value of parameter in histogram (maximum limit).
 Enter max value of histogram
 ```
 Note: all input values must be integer!
+
+## File Parser
+It is possible to give program a .cfg file as argument, which will contain a configuration data (the same as from input parser).
+
+The configuration file structure is:
+```
+Output
+Reverse
+DataPSD
+DataWaveform
+WaveformConfig
+Histogram
+```
+
+For any binary file type (PSD or Waveform) it is required to have field Output. Not necessary: Reverse, Histogram.
+
+For PSD binary file type must have field DataPSD.
+For Waveform binary file tyoe two fields are necessary: DataWaveform and WaveformConfig.
+
+The Output field configurates the output format (txt or root): RootNtuple and TxtNtuple.
+Looks like:
+```
+Output
++ RootNtuple
++ TxtNtuple
+```
+As a result, there will be output data in txt and root format files.
+If you need to save results only in root format (should remember that saving in txt format is time consume):
+```
+Output
++ RootNtuple
+```
+
+It is possible to reverse (multiply the result by -1) values of baseline, qShort and qLong (integrals). It is done using the parameter Reverse:
+```
+Reverse true
+```
+or
+```
+Reverse false
+```
+If the value is true - program will multiply this parameters by -1 (for both PSD and Waveform), if the value is false - program will fo nothing.
+
+In field DataPSD it is necessary to indicate all variables, that were encoded in binary file (if this field filled incorrect the result of decoding will be incoccect).
+All possible variables a shown below:
+```
+DataPSD
++ qShort
++ qLong
++ cfd_y1
++ cfd_y2
++ baseline
++ height
++ eventCounter
++ eventCounterPSD
++ psdValue
+```
+
+In DataWaveform field indicates, which variables are necessary to get from program. There are 4 variables:
+```
+DataWaveform
++ qShort
++ qLong
++ baseline
++ entries
+```
+
+There is a new variable entries that saves values from waveform in separate ntuple as values by each event. There are values id (number of event), t (time moment when the value of signal was get), wave (the value of signal).
+
+Next, in field WaveformConfig indicates values that necessary for decoding: starting point for baseline, qShort and qLong (as in Digitizer program, it is not necessary to them be equel with values in Digitizer) and wave length (wavelength).
+```
+WaveformConfig
++ baseline 100
++ qShort 120
++ qLong 380
++ wavelength 1000
+```
+In this case, the wavelength value must be the same as the one used in the measurements, and it does not need to be specified if the program receives two input binary files - PSD and Waveform.
+
+To configure histograms, you must specify the file type, parameter, number of bins, minimum value, and maximum value. In that order!
+
+Example:
+```
+Histogram
++ PSD qShort 1000 -20000 200000
++ Waveform qShort 1000 -20000 200000
+```
+
+Example of configuration file for PSD and Waveform:
+```
+Output
++ RootNtuple
++ TxtNtuple
+
+Reverse false
+
+DataPSD
++ qShort
++ qLong
++ cfd_y1
++ cfd_y2
++ baseline
++ height
++ eventCounter
++ eventCounterPSD
++ psdValue
+
+DataWaveform
++ qShort
++ qLong
++ baseline
++ entries
+
+WaveformConfig
++ baseline 100
++ qShort 120
++ qLong 380
+
+Histogram
++ PSD qShort 1000 -20000 200000
++ Waveform qShort 1000 -20000 200000
+```
+
+Example of configuration file for only PSD input file:
+```
+Output
++ RootNtuple
++ TxtNtuple
+
+Reverse false
+
+DataPSD
++ qShort
++ qLong
++ cfd_y1
++ cfd_y2
++ baseline
++ height
++ eventCounter
++ eventCounterPSD
++ psdValue
+
+Histogram
++ PSD qShort 1000 -20000 200000
+```
+
+Example of configuration file for only Waveform input file:
+```
+Output
++ RootNtuple
+
+Reverse false
+
+DataWaveform
++ qShort
++ qLong
++ baseline
++ entries
+
+WaveformConfig
++ baseline 100
++ qShort 120
++ qLong 380
++ wavelength 1000
+
+Histogram
++ Waveform qShort 1000 -20000 200000
+```
 
 # Output
 Output files will be in a directory where program was started.

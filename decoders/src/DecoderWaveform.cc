@@ -57,7 +57,6 @@ void DecoderWaveform::Decode() {
         aWave.id = i;
         aWave.t = t++;
         aPlt->Write(aWave);
-        if (t == 1000) std::cout << aWave.id << std::endl;
         if (t >= fWavePoint) {
             t = 0;
             i++;

@@ -65,6 +65,6 @@ void Plotter::Plot() {
         TCanvas* c = new TCanvas(name, "Canvas", 800, 600);
         hist[i]->Draw();
         hist[i]->Write(name);
-        c->SaveAs(name+".png");
+        if (ConfigParserFactory::Instance()->BuildParser()->GetOutputConfig()->GetOutput().TxtNtuple) c->SaveAs(name+".png");
     }
 }

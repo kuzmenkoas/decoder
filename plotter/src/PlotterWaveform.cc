@@ -25,5 +25,5 @@ void PlotterWaveform::Plot() {
     TCanvas* c = new TCanvas("waveform", "Canvas", 800, 600);
     gr->Draw("AL");
     gr->Write("waveform");
-    c->SaveAs("waveform.png");
+    if (ConfigParserFactory::Instance()->BuildParser()->GetOutputConfig()->GetOutput().TxtNtuple) c->SaveAs("waveform.png");
 }

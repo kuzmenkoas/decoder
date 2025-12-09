@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
     ConfigParserFactory::Instance()->BuildParser()->SetArgc(binCounter, argv);
     ConfigParserFactory::Instance()->BuildParser()->Parse();
     
-    DecoderBuilder* aDecoder = new DecoderBuilder(binCounter, argv);
+    DecoderBuilder* aDecoder = new DecoderBuilder(binCounter, argc, argv);
     Plotter::Instance()->Plot();
     // TODO (not good realization) smart ptr to solve
     RootFile::Instance()->CloseFile();

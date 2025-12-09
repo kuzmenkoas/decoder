@@ -6,7 +6,7 @@
 
 class DecoderBuilder {
 public:
-    DecoderBuilder(int argc, char* argv[]);
+    DecoderBuilder(int bin, int argc, char* argv[]);
     ~DecoderBuilder();
 private:
 };

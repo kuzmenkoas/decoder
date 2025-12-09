@@ -19,7 +19,7 @@ DecoderWaveform::~DecoderWaveform() {
 
 void DecoderWaveform::Touch() {
     Decode();
-    Output outWriters = ConfigParserFactory::Instance()->BuildParser()->GetOutputConfig()->GetOutput();
+    // Output outWriters = ConfigParserFactory::Instance()->BuildParser()->GetOutputConfig()->GetOutput();
     // if (outWriters.RootNtuple) {
     //     Plot();
     // }
@@ -56,6 +56,8 @@ void DecoderWaveform::Decode() {
         file.read(reinterpret_cast<char*>(&aWave.wave), sizeof(aWave.wave));
         aWave.id = i;
         aWave.t = t++;
+        aPlt->Write(aWave);
+        if (t == 1000) std::cout << aWave.id << std::endl;
         if (t >= fWavePoint) {
             t = 0;
             i++;
@@ -65,7 +67,7 @@ void DecoderWaveform::Decode() {
         for (std::vector<Writer*>::iterator it = fWriterVector.begin(); it != fWriterVector.end(); it++) {
             (*it)->Write(aWave);
         }
-        aPlt->Write(aWave);
+        // aPlt->Write(aWave);
         // csv gonna be too long and unreadable
 
         // algorithm to get a signal from waveform

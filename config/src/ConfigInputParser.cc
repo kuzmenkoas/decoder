@@ -54,6 +54,7 @@ void ConfigInputParser::Parse() {
         WaveformNumber();
     }
     Plots();
+    PlotsWaveform();
 }
 
 // no protection from user input
@@ -203,6 +204,28 @@ void ConfigInputParser::Plots() {
             if (encoder.eventCounter) if (tmp == std::to_string(f++)) ConfigParameter("PSD", "eventCounter");
             if (encoder.eventCounterPSD) if (tmp == std::to_string(f++)) ConfigParameter("PSD", "eventCounterPSD");
             if (encoder.psdValue) if (tmp == std::to_string(f++)) ConfigParameter("PSD", "psdValue");
+        }
+    }
+}
+
+void ConfigInputParser::PlotsWaveform() {
+    if (fFileType == DecoderType::WaveformType || fFileType == DecoderType::BothType) {
+        std::cout << "\n\n\nChoose parameter to plot (multiply input, example: 123 for 3 parameters to plot)" << std::endl;
+        int i = 0;
+        std::cout << " (" << i++ << ") exit" << std::endl;
+        std::cout << " (" << i++ << ") qShort" << std::endl;
+        std::cout << " (" << i++ << ") qLong" << std::endl;
+        std::cout << " (" << i++ << ") baseline" << std::endl;
+
+        std::string val;
+        std::cin >> val;
+        for (int k = 0; k < val.length(); k++) {
+            std::string tmp(1, val[k]);
+            int f = 0;
+            if (tmp == std::to_string(f++)) break;
+            if (tmp == std::to_string(f++)) ConfigParameter("Waveform", "qShort");
+            if (tmp == std::to_string(f++)) ConfigParameter("Waveform", "qLong");
+            if (tmp == std::to_string(f++)) ConfigParameter("Waveform", "baseline");
         }
     }
 }

@@ -45,6 +45,7 @@ private:
     void LongNumber();
 
     void Plots();
+    void PlotsWaveform();
     void ConfigParameter(TString decoder, TString par);
 
     static ConfigInputParser* fCfgParser;
